@@ -1,5 +1,6 @@
 package com.project.dudko.thebeastofthelabyrinth
 
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +15,8 @@ class MainGameActivity : AppCompatActivity() {
 
 
         pause.setOnClickListener {
-            
+            val intent = Intent(this, PauseActivity::class.java)
+            startActivity(intent)
         }
 
 
