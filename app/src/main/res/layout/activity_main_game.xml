@@ -18,13 +18,16 @@
         android:layout_height="wrap_content" />
     
     <Button
-        android:id="@+id/pause"
+        style="?android:attr/buttonBarButtonStyle"
+        android:id="@+id/button_pause"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:text="@string/pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    
+
+    <!--style="?android:attr/buttonBarButtonStyle"-->
+
     <TableLayout
         android:id="@+id/table"
         android:layout_centerInParent="true"
@@ -33,6 +36,7 @@
 
         <TableRow>
             <Button
+                style="ButtonBarContainerTheme"
                 android:id="@+id/button00"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"

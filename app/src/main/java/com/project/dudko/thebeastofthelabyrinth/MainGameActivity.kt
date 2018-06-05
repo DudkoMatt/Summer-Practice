@@ -14,7 +14,7 @@ class MainGameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_game)
 
 
-        pause.setOnClickListener {
+        button_pause.setOnClickListener {
             val intent = Intent(this, PauseActivity::class.java)
             startActivity(intent)
         }
