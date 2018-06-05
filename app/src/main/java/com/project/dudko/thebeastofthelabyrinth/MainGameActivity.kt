@@ -12,6 +12,12 @@ class MainGameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_game)
 
+
+        pause.setOnClickListener {
+            
+        }
+
+
         button00.setOnClickListener{
             button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
         }
