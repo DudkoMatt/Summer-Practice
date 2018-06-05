@@ -1,49 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StartActivity"
-    android:orientation="vertical">
 
 
+    android:orientation="vertical"
+    tools:context=".StartActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/llout"
-        android:layout_centerHorizontal="true"
-        android:text="Заменить этот TextView на изображение с текстом!" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="11"
+        android:background="#5d33e5">
 
-    <LinearLayout
-        android:id="@+id/llout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
+    </RelativeLayout>
 
-        <Button
-            android:id="@+id/start"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="Start" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="16"
+        android:background="#cb66f90b"
+
+        >
 
         <Button
-            android:id="@+id/about"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:id="@+id/button1"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="25dp"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="30dp"
+            android:text="Start"
+
+            />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="25dp"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="30dp"
+            android:text="Options" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/button1"
+            android:layout_marginBottom="25dp"
+            android:layout_marginHorizontal="60dp"
             android:text="About" />
 
         <Button
-            android:id="@+id/help"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="Help" />
-    </LinearLayout>
+            android:id="@+id/button4"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_alignStart="@id/button2"
+            android:layout_below="@id/button2"
+            android:layout_marginBottom="25dp"
+            android:text="Stats"
 
-</RelativeLayout>
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
