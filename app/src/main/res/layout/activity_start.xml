@@ -13,18 +13,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="11"
-        android:background="#5d33e5">
+        android:background="#33d0e5">
 
         <TextView
             android:id="@+id/ProjectName"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_marginHorizontal="45dp"
             android:fontFamily="@font/aclonica"
             android:textColor="#010005"
-            android:textSize="30sp"
+            android:textSize="50sp"
+            android:textAlignment="center"
+
 
 
             android:text="The Beast Of The Labyrinth" />
@@ -35,52 +37,56 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="16"
-        android:background="#cb66f90b"
+        android:background="#cb56f90b"
 
         >
 
         <Button
             android:id="@+id/start"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="25dp"
-            android:layout_marginHorizontal="60dp"
+            android:layout_marginHorizontal="50dp"
             android:layout_marginTop="30dp"
-            android:fontFamily="@font/allerta"
-
-            android:text="Start" />
+            android:text="Start"
+            android:fontFamily="@font/atomic_age"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/options"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="70dp"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="25dp"
-            android:layout_marginHorizontal="60dp"
+            android:layout_marginHorizontal="50dp"
             android:layout_marginTop="30dp"
             android:text="Options"
-            android:fontFamily="@font/allerta" />
+            android:fontFamily="@font/atomic_age"
+            android:textSize="20sp"
+            />
 
         <Button
             android:id="@+id/about"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="70dp"
             android:layout_below="@id/start"
             android:layout_marginBottom="25dp"
-            android:layout_marginHorizontal="60dp"
+            android:layout_marginHorizontal="50dp"
             android:text="About"
-            android:fontFamily="@font/allerta" />
+            android:fontFamily="@font/atomic_age"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/help"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="70dp"
             android:layout_alignStart="@id/options"
             android:layout_below="@id/options"
             android:layout_marginBottom="25dp"
             android:text="Help"
-            android:fontFamily="@font/allerta"
+            android:fontFamily="@font/atomic_age"
+            android:textSize="20sp"
 
             />
 
