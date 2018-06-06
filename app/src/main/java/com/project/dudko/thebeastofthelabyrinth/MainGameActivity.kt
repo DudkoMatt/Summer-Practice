@@ -4,19 +4,34 @@ import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main_game.*
 import java.util.*
 
 class MainGameActivity : AppCompatActivity() {
 
+
+    val REQUEST_EXIT = 1
+    //0 - продолжить
+    //1 - выйти
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == 1) finish()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.d("Tag", "Create")
+
+
         setContentView(R.layout.activity_main_game)
 
 
         button_pause.setOnClickListener {
             val intent = Intent(this, PauseActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, REQUEST_EXIT)
         }
 
 
@@ -277,4 +292,29 @@ class MainGameActivity : AppCompatActivity() {
         }
         
     }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("Tag", "Start")
+    }
+
+    /*override fun onResume() {
+        super.onResume()
+        Log.d("Tag", "Resume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("Tag", "Pause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("Tag", "Stop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Tag", "Destroy")
+    }*/
 }
