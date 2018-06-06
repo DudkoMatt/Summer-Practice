@@ -32,7 +32,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".LevelSelector">
+        <activity android:name=".LevelSelector" android:screenOrientation="portrait">
 
         </activity>
 
