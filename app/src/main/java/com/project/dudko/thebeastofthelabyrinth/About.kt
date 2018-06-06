@@ -3,7 +3,6 @@ package com.project.dudko.thebeastofthelabyrinth
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
-//import com.project.dudko.thebeastofthelabyrinth.R.id.listview
 import kotlinx.android.synthetic.main.activity_main.*
 
 
