@@ -7,9 +7,152 @@ import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main_game.*
 import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
 
+    class MapOfLabyrinth(var id: Int? = null){
+        /*
+            Сопоставить картинки и id:
+
+            //только стены
+            000
+            001
+            002
+            003
+            004
+            005
+            006
+            007
+            008
+            009
+            010
+            011
+            012
+            013
+            014
+            015
+
+            //+ монета
+            100
+            101
+            102
+            103
+            104
+            105
+            106
+            107
+            108
+            109
+            110
+            111
+            112
+            113
+            114
+            115
+
+            //+ кентавр
+            200
+            201
+            202
+            203
+            204
+            205
+            206
+            207
+            208
+            209
+            210
+            211
+            212
+            213
+            214
+            215
+
+            //+ кентавр / монета
+            300
+            301
+            302
+            303
+            304
+            305
+            306
+            307
+            308
+            309
+            310
+            311
+            312
+            313
+            314
+            315
+         */
+
+        fun Update(x: Int = 0, y: Int = 0): Boolean{
+
+            //ToDO: переходить на заключительный экран, в случае true
+
+            if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1]){
+                return true
+            }
+            PlayerPosition[0] = max(min(PlayerPosition[0] + x, 7), 0)
+            PlayerPosition[1] = max(min(PlayerPosition[1] + y, 7), 0)
+            return false
+        }
+
+        fun redraw(pos: Array<Int>){
+            //ToDO: заменить картинку на кнопке, где стоит игрок
+        }
+
+        fun isCoinCollected(): Boolean{
+            if(PlayerPosition in CoinsPosition && PlayerPosition !in CollectedCoins){
+                CollectedCoins.add(PlayerPosition)
+                NumberOfCollectedCoins++
+                redraw(PlayerPosition)
+                return true
+            }
+            return false
+        }
+
+        var EnemyPosition = Array(2){i -> 0}
+        var PlayerPosition = Array(2){i -> 0}
+        var CoinNumber = 5
+        var CoinsPosition = Array(CoinNumber){i -> Array(2){i -> 0}}
+
+        var CollectedCoins = MutableList(0){i -> Array(2){i -> 0}}
+        var NumberOfCollectedCoins = 0
+
+        var ExitPosition = Array(2){i -> 0} //Учитывать, что выход сдвинут вне каоты на одну клетку
+
+        var map = Array(8){i -> Array(8){0}}
+        init{
+
+            if(id != null) {
+                //ToDO: Задать объявление из файлов
+            } else {
+                map[0][0] = 7
+                map[0][7] = 5
+                map[7][0] = 10
+                map[7][7] = 8
+
+                for(i in 1..6) map[0][i] = 1
+                for(i in 1..6) map[7][i] = 3
+                for(i in 1..6) map[i][0] = 4
+                for(i in 1..6) map[i][7] = 2
+            }
+        }
+    }
+
+    init {
+        val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
+                    MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt())
+        }
+                else {
+                    MapOfLabyrinth()
+                }
+        map.redraw(map.PlayerPosition)
+    }
 
     val REQUEST_EXIT = 1
     //0 - продолжить
@@ -293,10 +436,10 @@ class MainGameActivity : AppCompatActivity() {
         
     }
 
-    override fun onStart() {
+    /*override fun onStart() {
         super.onStart()
         Log.d("Tag", "Start")
-    }
+    }*/
 
     /*override fun onResume() {
         super.onResume()
