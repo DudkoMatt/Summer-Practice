@@ -13,5 +13,9 @@ class LevelSelector : AppCompatActivity() {
         button_back.setOnClickListener {
             finish()
         }
+        button_1.setOnClickListener{
+            val intent = Intent(this, MainGameActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
