@@ -17,7 +17,7 @@ import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
 
-    /*class MapOfLabyrinth(var id: Int? = null, context: Context){
+    class MapOfLabyrinth(var id: Int? = null, context: Context, var buttons: Array<Array<Button>>){
         /*
             Сопоставить картинки и id:
 
@@ -114,7 +114,7 @@ class MainGameActivity : AppCompatActivity() {
 
         fun update(x: Int = 0, y: Int = 0): Boolean{
 
-            //ToDO: переходить на заключительный экран, в случае true
+            //ToDO: переходить на заключительный экран, в случае true. Или добавлять кнопку exit?
 
             if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1]){
                 return true
@@ -125,12 +125,12 @@ class MainGameActivity : AppCompatActivity() {
                     (PlayerPosition[0] == x+1 && PlayerPosition[1] == y)) { //ToDo: Стены
                 PlayerPosition[0] = x
                 PlayerPosition[1] = y
-                redraw(PlayerPosition)
+                redraw()
             }
             return false
         }
 
-        fun redraw(pos: Array<Int>){
+        fun redraw(){
             buttons[PlayerPosition[0]][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
             buttons[min(max(PlayerPosition[0]+1, 0), 7)][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
             buttons[PlayerPosition[0]][min(max(PlayerPosition[1]+1,0), 7)].setBackgroundColor(Color.GREEN)
@@ -153,7 +153,7 @@ class MainGameActivity : AppCompatActivity() {
             if(PlayerPosition in CoinsPosition && PlayerPosition !in CollectedCoins){
                 CollectedCoins.add(PlayerPosition)
                 NumberOfCollectedCoins++
-                redraw(PlayerPosition)
+                redraw()
                 return true
             }
             return false
@@ -190,33 +190,71 @@ class MainGameActivity : AppCompatActivity() {
                 for(i in 1..6) map[i][7] = 2
             }
         }
-    }*/
+    }
 
     val REQUEST_EXIT = 1
     //0 - продолжить
     //1 - выйти
 
 
-    //var Buttons = List(8){i -> List(8){i -> button00}}
-    var Buttons: ArrayList<List<Button>> = arrayListOf(emptyList())
-    /*init{
+    lateinit var Buttons: MutableList<MutableList<ImageButton>>
+
+    init{
+        //ToDo
 
 
+        /*val tr = TableRow(this)
+
+    tr.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT)
 
 
+    table.addView(tr)*/
 
-        Log.d("main", "before")
-        for (i in 0..8)
-        {
-            var but_vec: List<Button> = emptyList()
-            for (j in 0..8)
+        Buttons = MutableList(8){i -> MutableList(0){ ImageButton(this) }}
+
+        val n = 64
+        for (i in 0..7) {
+            for (j in 0..7)
             {
-                but_vec.plus()
+                //Log.d("Cre", "base_width: ${baselayout.width}\nbase_heigth: ${baselayout.height}")
+                val button = ImageButton(this)
+                button.layoutParams = TableRow.LayoutParams(0, 175, 1f)//baselayout.width/8, (baselayout.height*0.7/8).toInt(), 1f)
+                button.setBackgroundResource(R.drawable.img_000)
+
+
+
+                //button.text = "123"   <- Button
+
+
+                //button.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                //button.height = LinearLayout.LayoutParams.WRAP_CONTENT
+
+
+                button.id = (i.toString() + j.toString()).toInt()
+
+//                    val lp = LinearLayout.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT, 1.toFloat())
+//                    button.layoutParams = lp
+
+                Buttons[i].add(ImageButton(this))
             }
         }
-        Log.d("main", "after")
 
-    }*/
+
+        for(i in 0 until n) {
+            val button = Buttons[i / 8][i % 8]
+            when (i / 8) {
+                0 -> tablerow1.addView(button)
+                1 -> tablerow2.addView(button)
+                2 -> tablerow3.addView(button)
+                3 -> tablerow4.addView(button)
+                4 -> tablerow5.addView(button)
+                5 -> tablerow6.addView(button)
+                6 -> tablerow7.addView(button)
+                7 -> tablerow8.addView(button)
+            }
+        }
+
+    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -240,56 +278,7 @@ class MainGameActivity : AppCompatActivity() {
 
         Log.d("Tag", "Create")
 
-        val Buttons = Array(8){i -> Array(8){i -> ImageButton(this)}}
 
-        //ToDo
-        
-
-        /*val tr = TableRow(this)
-
-    tr.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT)
-
-
-    table.addView(tr)*/
-        
-        val n = 64
-        for (i in 0..7) {
-            for (j in 0..7)
-                {
-                    //Log.d("Cre", "base_width: ${baselayout.width}\nbase_heigth: ${baselayout.height}")
-                    Buttons[i][j].layoutParams = TableRow.LayoutParams(0, 175, 1f)//baselayout.width/8, (baselayout.height*0.7/8).toInt(), 1f)
-                    Buttons[i][j].setBackgroundResource(R.drawable.img_000)
-
-
-
-                    //button.text = "123"   <- Button
-
-
-                    //button.width = LinearLayout.LayoutParams.WRAP_CONTENT
-                    //button.height = LinearLayout.LayoutParams.WRAP_CONTENT
-
-
-                    Buttons[i][j].id = (i.toString() + j.toString()).toInt()
-
-//                    val lp = LinearLayout.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT, 1.toFloat())
-//                    button.layoutParams = lp
-                }
-        }
-
-
-        for(i in 0 until n) {
-            val button = Buttons[i / 8][i % 8]
-            when (i / 8) {
-                0 -> tablerow1.addView(button)
-                1 -> tablerow2.addView(button)
-                2 -> tablerow3.addView(button)
-                3 -> tablerow4.addView(button)
-                4 -> tablerow5.addView(button)
-                5 -> tablerow6.addView(button)
-                6 -> tablerow7.addView(button)
-                7 -> tablerow8.addView(button)
-            }
-        }
 
 
 
