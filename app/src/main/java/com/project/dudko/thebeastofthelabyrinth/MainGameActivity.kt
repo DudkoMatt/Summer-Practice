@@ -18,7 +18,7 @@ import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
 
-    class MapOfLabyrinth(var id: Int? = null, context: Context, var buttons: Array<Array<Button>>){
+    class MapOfLabyrinth(var id: Int? = null, context: Context, var buttons: Array<Array<ImageButton>>){
         /*
             Сопоставить картинки и id:
 
@@ -289,7 +289,7 @@ class MainGameActivity : AppCompatActivity() {
         }
 
 
-        val ButtonsView = Array(8){i -> Array(8){j -> findViewById<Button>(Buttons[i][j]) }}
+        val ButtonsView = Array(8){i -> Array(8){j -> findViewById<ImageButton>(Buttons[i][j]) }}
 
 
         val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
