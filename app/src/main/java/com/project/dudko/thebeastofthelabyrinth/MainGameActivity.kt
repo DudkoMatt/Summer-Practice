@@ -2,11 +2,11 @@ package com.project.dudko.thebeastofthelabyrinth
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.AssetManager
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import com.project.dudko.thebeastofthelabyrinth.R.array.map_1
 import kotlinx.android.synthetic.main.activity_main_game.*
 import java.util.*
@@ -15,7 +15,7 @@ import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
 
-    class MapOfLabyrinth(var id: Int? = null, context: Context){
+    class MapOfLabyrinth(var id: Int? = null, context: Context, var buttons: Array<Array<Button>>){
         /*
             Сопоставить картинки и id:
 
@@ -129,7 +129,22 @@ class MainGameActivity : AppCompatActivity() {
         }
 
         fun redraw(pos: Array<Int>){
-            //ToDO: заменить картинку на кнопке, где стоит игрок
+            buttons[PlayerPosition[0]][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
+            buttons[min(max(PlayerPosition[0]+1, 0), 7)][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
+            buttons[PlayerPosition[0]][min(max(PlayerPosition[1]+1,0), 7)].setBackgroundColor(Color.GREEN)
+            buttons[min(max(PlayerPosition[0]-1, 0), 7)][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
+            buttons[PlayerPosition[0]][min(max(PlayerPosition[0]-1, 0), 7)].setBackgroundColor(Color.GREEN)
+            val noChange = Array(5){i -> Array(2){i -> 0}}
+            noChange[0] = arrayOf(PlayerPosition[0], PlayerPosition[1])
+            noChange[1] = arrayOf(min(max(PlayerPosition[0]+1, 0), 7), PlayerPosition[1])
+            noChange[2] = arrayOf(PlayerPosition[0], min(max(PlayerPosition[1]+1,0), 7))
+            noChange[3] = arrayOf(min(max(PlayerPosition[0]-1, 0), 7), PlayerPosition[1])
+            noChange[4] = arrayOf(PlayerPosition[0], min(max(PlayerPosition[0]-1, 0), 7))
+            for(i in 0..7)
+                for(j in 0..7)
+                    if(arrayOf(i, j) !in noChange){
+                        buttons[i][j].setBackgroundColor(Color.BLACK)
+                    }
         }
 
         fun isCoinCollected(): Boolean{
@@ -178,6 +193,75 @@ class MainGameActivity : AppCompatActivity() {
     //0 - продолжить
     //1 - выйти
 
+
+    var Buttons = Array(8){i -> Array(8){i -> button00}}
+    init{
+        Buttons[0][0] = button00
+        Buttons[0][1] = button01
+        Buttons[0][2] = button02
+        Buttons[0][3] = button03
+        Buttons[0][4] = button04
+        Buttons[0][5] = button05
+        Buttons[0][6] = button06
+        Buttons[0][7] = button07
+        Buttons[1][0] = button10
+        Buttons[1][1] = button11
+        Buttons[1][2] = button12
+        Buttons[1][3] = button13
+        Buttons[1][4] = button14
+        Buttons[1][5] = button15
+        Buttons[1][6] = button16
+        Buttons[1][7] = button17
+        Buttons[2][0] = button20
+        Buttons[2][1] = button21
+        Buttons[2][2] = button22
+        Buttons[2][3] = button23
+        Buttons[2][4] = button24
+        Buttons[2][5] = button25
+        Buttons[2][6] = button26
+        Buttons[2][7] = button27
+        Buttons[3][0] = button30
+        Buttons[3][1] = button31
+        Buttons[3][2] = button32
+        Buttons[3][3] = button33
+        Buttons[3][4] = button34
+        Buttons[3][5] = button35
+        Buttons[3][6] = button36
+        Buttons[3][7] = button37
+        Buttons[4][0] = button40
+        Buttons[4][1] = button41
+        Buttons[4][2] = button42
+        Buttons[4][3] = button43
+        Buttons[4][4] = button44
+        Buttons[4][5] = button45
+        Buttons[4][6] = button46
+        Buttons[4][7] = button47
+        Buttons[5][0] = button50
+        Buttons[5][1] = button51
+        Buttons[5][2] = button52
+        Buttons[5][3] = button53
+        Buttons[5][4] = button54
+        Buttons[5][5] = button55
+        Buttons[5][6] = button56
+        Buttons[5][7] = button57
+        Buttons[6][0] = button60
+        Buttons[6][1] = button61
+        Buttons[6][2] = button62
+        Buttons[6][3] = button63
+        Buttons[6][4] = button64
+        Buttons[6][5] = button65
+        Buttons[6][6] = button66
+        Buttons[6][7] = button67
+        Buttons[7][0] = button70
+        Buttons[7][1] = button71
+        Buttons[7][2] = button72
+        Buttons[7][3] = button73
+        Buttons[7][4] = button74
+        Buttons[7][5] = button75
+        Buttons[7][6] = button76
+        Buttons[7][7] = button77
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == 1) finish()
@@ -189,10 +273,10 @@ class MainGameActivity : AppCompatActivity() {
 
         val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
             Log.d("Map", "It has extra")
-            MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this)
+            MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this, Buttons)
         }
         else {
-            MapOfLabyrinth(null, this)
+            MapOfLabyrinth(null, this, Buttons)
         }
         map.redraw(map.PlayerPosition)
 
