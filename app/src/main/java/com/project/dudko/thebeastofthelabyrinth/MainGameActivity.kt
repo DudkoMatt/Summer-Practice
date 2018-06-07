@@ -219,12 +219,6 @@ class MainGameActivity : AppCompatActivity() {
     }*/
 
 
-    /*class attrs: AttributeSet {
-        override fun getPositionDescription():String{
-            return ""
-        }
-    }*/
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == 1) finish()
@@ -262,7 +256,8 @@ class MainGameActivity : AppCompatActivity() {
         for (i in 0..7) {
             for (j in 0..7)
                 {
-                    Buttons[i][j].layoutParams = TableRow.LayoutParams(50, 50)   //(this, attr)
+                    //Log.d("Cre", "base_width: ${baselayout.width}\nbase_heigth: ${baselayout.height}")
+                    Buttons[i][j].layoutParams = TableRow.LayoutParams(0, 175, 1f)//baselayout.width/8, (baselayout.height*0.7/8).toInt(), 1f)
                     Buttons[i][j].setBackgroundResource(R.drawable.img_000)
 
 
