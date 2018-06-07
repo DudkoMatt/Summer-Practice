@@ -142,7 +142,7 @@ class MainGameActivity : AppCompatActivity() {
             buttons[min(max(PlayerPosition[0]+1, 0), 7)][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
             buttons[PlayerPosition[0]][min(max(PlayerPosition[1]+1,0), 7)].setBackgroundColor(Color.GREEN)
             buttons[min(max(PlayerPosition[0]-1, 0), 7)][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
-            buttons[PlayerPosition[0]][min(max(PlayerPosition[0]-1, 0), 7)].setBackgroundColor(Color.GREEN)
+            buttons[PlayerPosition[0]][min(max(PlayerPosition[1]-1, 0), 7)].setBackgroundColor(Color.GREEN)
             val noChange = Array(5){i -> Array(2){i -> 0}}
             noChange[0] = arrayOf(PlayerPosition[0], PlayerPosition[1])
             noChange[1] = arrayOf(min(max(PlayerPosition[0]+1, 0), 7), PlayerPosition[1])
