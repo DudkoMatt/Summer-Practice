@@ -1,10 +1,13 @@
 package com.project.dudko.thebeastofthelabyrinth
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.AssetManager
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.project.dudko.thebeastofthelabyrinth.R.array.map_1
 import kotlinx.android.synthetic.main.activity_main_game.*
 import java.util.*
 import kotlin.math.max
@@ -12,7 +15,7 @@ import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
 
-    class MapOfLabyrinth(var id: Int? = null){
+    class MapOfLabyrinth(var id: Int? = null, context: Context){
         /*
             Сопоставить картинки и id:
 
@@ -152,8 +155,11 @@ class MainGameActivity : AppCompatActivity() {
         var map = Array(8){i -> Array(8){0}}
         init{
 
+
             if(id != null) {
                 //ToDO: Задать объявление из файлов
+                Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
+
             } else {
                 map[0][0] = 7
                 map[0][7] = 5
@@ -182,10 +188,11 @@ class MainGameActivity : AppCompatActivity() {
 
 
         val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
-            MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt())
+            Log.d("Map", "It has extra")
+            MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this)
         }
         else {
-            MapOfLabyrinth()
+            MapOfLabyrinth(null, this)
         }
         map.redraw(map.PlayerPosition)
 

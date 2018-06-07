@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- ToDO: Как это работает??? -->
-    <integer-array name="map_1">
-        7 1 1 1 1 1 1 5
-        4 0 0 0 0 0 0 2
-        4 0 0 0 0 0 0 2
-        4 0 0 0 0 0 0 2
-        4 0 0 0 0 0 0 2
-        4 0 0 0 0 0 0 0
-        4 0 0 0 0 0 0 2
-        10 2 3 4 5 6 7 8
-    </integer-array>
+    <string-array name="map_1">
+        <item>7 1 1 1 1 1 1 5</item>
+        <item>4 0 0 0 0 0 0 2</item>
+        <item>4 0 0 0 0 0 0 2</item>
+        <item>4 0 0 0 0 0 0 2</item>
+        <item>4 0 0 0 0 0 0 2</item>
+        <item>4 0 0 0 0 0 0 0</item>
+        <item>4 0 0 0 0 0 0 2</item>
+        <item>10 2 3 4 5 6 7 8</item>
+    </string-array>
 </resources>
