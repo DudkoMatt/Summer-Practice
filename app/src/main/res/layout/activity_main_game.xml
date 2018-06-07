@@ -223,11 +223,13 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <Button
+
+            <ImageButton
                 android:id="@+id/button43"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/phoca_thumb_l_0005841"      />
             <Button
                 android:id="@+id/button44"
                 android:layout_weight="1"
