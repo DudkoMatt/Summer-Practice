@@ -197,64 +197,8 @@ class MainGameActivity : AppCompatActivity() {
     //1 - выйти
 
 
-    lateinit var Buttons: MutableList<MutableList<ImageButton>>
+    val Buttons = Array(8){i -> Array(8){i -> -1}}
 
-    init{
-        //ToDo
-
-
-        /*val tr = TableRow(this)
-
-    tr.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT)
-
-
-    table.addView(tr)*/
-
-        Buttons = MutableList(8){i -> MutableList(0){ ImageButton(this) }}
-
-        val n = 64
-        for (i in 0..7) {
-            for (j in 0..7)
-            {
-                //Log.d("Cre", "base_width: ${baselayout.width}\nbase_heigth: ${baselayout.height}")
-                val button = ImageButton(this)
-                button.layoutParams = TableRow.LayoutParams(0, 175, 1f)//baselayout.width/8, (baselayout.height*0.7/8).toInt(), 1f)
-                button.setBackgroundResource(R.drawable.img_000)
-
-
-
-                //button.text = "123"   <- Button
-
-
-                //button.width = LinearLayout.LayoutParams.WRAP_CONTENT
-                //button.height = LinearLayout.LayoutParams.WRAP_CONTENT
-
-
-                button.id = (i.toString() + j.toString()).toInt()
-
-//                    val lp = LinearLayout.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT, 1.toFloat())
-//                    button.layoutParams = lp
-
-                Buttons[i].add(ImageButton(this))
-            }
-        }
-
-
-        for(i in 0 until n) {
-            val button = Buttons[i / 8][i % 8]
-            when (i / 8) {
-                0 -> tablerow1.addView(button)
-                1 -> tablerow2.addView(button)
-                2 -> tablerow3.addView(button)
-                3 -> tablerow4.addView(button)
-                4 -> tablerow5.addView(button)
-                5 -> tablerow6.addView(button)
-                6 -> tablerow7.addView(button)
-                7 -> tablerow8.addView(button)
-            }
-        }
-
-    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -280,12 +224,78 @@ class MainGameActivity : AppCompatActivity() {
 
 
 
+        //ToDo
+
+
+        /*val tr = TableRow(this)
+
+    tr.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT)
+
+
+    table.addView(tr)*/
+
+        val n = 64
+        for (i in 0..7) {
+            for (j in 0..7)
+            {
+                //Log.d("Cre", "base_width: ${baselayout.width}\nbase_heigth: ${baselayout.height}")
+                val button = ImageButton(this)
+                button.layoutParams = TableRow.LayoutParams(0, 175, 1f)//baselayout.width/8, (baselayout.height*0.7/8).toInt(), 1f)
+                button.setBackgroundResource(R.drawable.img_000)
+
+
+
+                //button.text = "123"   <- Button
+
+
+                //button.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                //button.height = LinearLayout.LayoutParams.WRAP_CONTENT
+
+
+                button.id = (i.toString() + j.toString()).toInt()
+
+                Buttons[i][j] = (i.toString() + j.toString()).toInt()
+
+//                    val lp = LinearLayout.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT, 1.toFloat())
+//                    button.layoutParams = lp
+
+                when (i) {
+                    0 -> tablerow1.addView(button)
+                    1 -> tablerow2.addView(button)
+                    2 -> tablerow3.addView(button)
+                    3 -> tablerow4.addView(button)
+                    4 -> tablerow5.addView(button)
+                    5 -> tablerow6.addView(button)
+                    6 -> tablerow7.addView(button)
+                    7 -> tablerow8.addView(button)
+                }
+            }
+        }
+
+
+        /*for(i in 0 until n) {
+            val button = findViewById<ImageButton>(Buttons[i / 8][i % 8])
+            Log.d("Err", "\nid: ${Buttons[i / 8][i % 8]}\nbutton: $button")
+            when (i / 8) {
+                0 -> tablerow1.addView(button)
+                1 -> tablerow2.addView(button)
+                2 -> tablerow3.addView(button)
+                3 -> tablerow4.addView(button)
+                4 -> tablerow5.addView(button)
+                5 -> tablerow6.addView(button)
+                6 -> tablerow7.addView(button)
+                7 -> tablerow8.addView(button)
+            }
+        }*/
+
 
 
         button_pause.setOnClickListener {
             val intent = Intent(this, PauseActivity::class.java)
             startActivityForResult(intent, REQUEST_EXIT)
         }
+
+
 
 
         /*button00.setOnClickListener{
