@@ -87,6 +87,24 @@ class MainGameActivity : AppCompatActivity() {
             313
             314
             315
+
+            //+ игрок
+            400
+            401
+            402
+            403
+            404
+            405
+            406
+            407
+            408
+            409
+            410
+            411
+            412
+            413
+            414
+            415
          */
 
         fun update(x: Int = 0, y: Int = 0): Boolean{
