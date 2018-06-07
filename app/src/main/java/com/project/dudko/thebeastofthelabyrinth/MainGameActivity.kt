@@ -114,20 +114,26 @@ class MainGameActivity : AppCompatActivity() {
          */
 
         fun update(x: Int = 0, y: Int = 0): Boolean{
+            Log.d("Msg", "In update")
 
             //ToDO: переходить на заключительный экран, в случае true. Или добавлять кнопку exit?
 
-            if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1]){
+            if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1] && NumberOfCollectedCoins == CoinNumber){
                 return true
             }
+
+            Log.d("Msg", "Before if: x=$x; y=$y")
+
             if ((PlayerPosition[0] == x-1 && PlayerPosition[1] == y) ||
                     (PlayerPosition[0] == x && PlayerPosition[1] == y-1) ||
                     (PlayerPosition[0] == x && PlayerPosition[1] == y+1) ||
                     (PlayerPosition[0] == x+1 && PlayerPosition[1] == y)) { //ToDo: Стены
+                Log.d("Msg", "In if")
                 PlayerPosition[0] = x
                 PlayerPosition[1] = y
                 redraw()
             }
+            Log.d("Msg", "After if")
             return false
         }
 
@@ -142,16 +148,26 @@ class MainGameActivity : AppCompatActivity() {
             noChange[1] = arrayOf(min(max(PlayerPosition[0]+1, 0), 7), PlayerPosition[1])
             noChange[2] = arrayOf(PlayerPosition[0], min(max(PlayerPosition[1]+1,0), 7))
             noChange[3] = arrayOf(min(max(PlayerPosition[0]-1, 0), 7), PlayerPosition[1])
-            noChange[4] = arrayOf(PlayerPosition[0], min(max(PlayerPosition[0]-1, 0), 7))
+            noChange[4] = arrayOf(PlayerPosition[0], min(max(PlayerPosition[1]-1, 0), 7))
+
+            Log.d("Msg", "\n\n\n\n\n\n  noChange:\n0x=:${noChange[0][0]}; y=:${noChange[0][1]}\n  " +
+                    "noChange:\n" +
+                    "1:x=${noChange[1][0]}; y=${noChange[1][1]}\nnoChange:\n" +
+                    "2:x=${noChange[2][0]}; y=${noChange[2][1]}\nnoChange:\n" +
+
+                    "3:x=${noChange[3][0]}; y=${noChange[3][1]}\nnoChange:\n" +
+                    "4:x=${noChange[4][0]}; y=${noChange[4][1]}\n  \n\n\n\n\n\n")
+
             for(i in 0..7)
                 for(j in 0..7)
                     if(!checkXinY(arrayOf(i, j), noChange)){
-                        buttons[i][j].setBackgroundColor(Color.BLACK)
+                        buttons[i][j].setBackgroundColor(Color.GRAY)
                     }
         }
 
 
         fun checkXinY(x:Array<Int>, y:Array<Array<Int>>) : Boolean{
+            Log.d("Msg", "x:(${x[0]};${x[1]})\ny:(${y[0][0]};${y[0][1]})    (${y[1][0]};${y[1][1]})    (${y[2][0]};${y[2][1]})    (${y[3][0]};${y[3][1]})    (${y[4][0]};${y[4][1]})")
             for(i in 0 until y.size){
                 if(x[0] == y[i][0] && x[1] == y[i][1])
                     return true
@@ -315,7 +331,7 @@ class MainGameActivity : AppCompatActivity() {
             for(j in 0..7)
                 findViewById<ImageButton>(Buttons[i][j]).setOnClickListener {
                     map.update(i, j)
-                    Log.d("Msg", "Clicked on a button: i=$i; j=$j")
+                    Log.d("Msg", "Clicked on a button: i=$i; j=$j;                        Player's Position: x=${map.PlayerPosition[0]}; y=${map.PlayerPosition[1]}")
                 }
 
 
