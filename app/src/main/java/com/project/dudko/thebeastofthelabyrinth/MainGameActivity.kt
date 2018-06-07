@@ -5,8 +5,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
-import android.widget.Button
+import android.view.ViewGroup
+import android.widget.*
 import com.project.dudko.thebeastofthelabyrinth.R.array.map_1
 import kotlinx.android.synthetic.main.activity_main_game.*
 import java.util.*
@@ -15,7 +17,7 @@ import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
 
-    class MapOfLabyrinth(var id: Int? = null, context: Context, var buttons: Array<Array<Button>>){
+    /*class MapOfLabyrinth(var id: Int? = null, context: Context){
         /*
             Сопоставить картинки и id:
 
@@ -171,7 +173,8 @@ class MainGameActivity : AppCompatActivity() {
         init{
 
 
-            if(id != null) {
+            if(id == null) {
+                //ToDO: Поменять местами
                 //ToDO: Задать объявление из файлов
                 Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
 
@@ -187,80 +190,40 @@ class MainGameActivity : AppCompatActivity() {
                 for(i in 1..6) map[i][7] = 2
             }
         }
-    }
+    }*/
 
     val REQUEST_EXIT = 1
     //0 - продолжить
     //1 - выйти
 
 
-    var Buttons = Array(8){i -> Array(8){i -> button00}}
-    init{
-        Buttons[0][0] = button00
-        Buttons[0][1] = button01
-        Buttons[0][2] = button02
-        Buttons[0][3] = button03
-        Buttons[0][4] = button04
-        Buttons[0][5] = button05
-        Buttons[0][6] = button06
-        Buttons[0][7] = button07
-        Buttons[1][0] = button10
-        Buttons[1][1] = button11
-        Buttons[1][2] = button12
-        Buttons[1][3] = button13
-        Buttons[1][4] = button14
-        Buttons[1][5] = button15
-        Buttons[1][6] = button16
-        Buttons[1][7] = button17
-        Buttons[2][0] = button20
-        Buttons[2][1] = button21
-        Buttons[2][2] = button22
-        Buttons[2][3] = button23
-        Buttons[2][4] = button24
-        Buttons[2][5] = button25
-        Buttons[2][6] = button26
-        Buttons[2][7] = button27
-        Buttons[3][0] = button30
-        Buttons[3][1] = button31
-        Buttons[3][2] = button32
-        Buttons[3][3] = button33
-        Buttons[3][4] = button34
-        Buttons[3][5] = button35
-        Buttons[3][6] = button36
-        Buttons[3][7] = button37
-        Buttons[4][0] = button40
-        Buttons[4][1] = button41
-        Buttons[4][2] = button42
-        Buttons[4][3] = button43
-        Buttons[4][4] = button44
-        Buttons[4][5] = button45
-        Buttons[4][6] = button46
-        Buttons[4][7] = button47
-        Buttons[5][0] = button50
-        Buttons[5][1] = button51
-        Buttons[5][2] = button52
-        Buttons[5][3] = button53
-        Buttons[5][4] = button54
-        Buttons[5][5] = button55
-        Buttons[5][6] = button56
-        Buttons[5][7] = button57
-        Buttons[6][0] = button60
-        Buttons[6][1] = button61
-        Buttons[6][2] = button62
-        Buttons[6][3] = button63
-        Buttons[6][4] = button64
-        Buttons[6][5] = button65
-        Buttons[6][6] = button66
-        Buttons[6][7] = button67
-        Buttons[7][0] = button70
-        Buttons[7][1] = button71
-        Buttons[7][2] = button72
-        Buttons[7][3] = button73
-        Buttons[7][4] = button74
-        Buttons[7][5] = button75
-        Buttons[7][6] = button76
-        Buttons[7][7] = button77
-    }
+    //var Buttons = List(8){i -> List(8){i -> button00}}
+    var Buttons: ArrayList<List<Button>> = arrayListOf(emptyList())
+    /*init{
+
+
+
+
+
+        Log.d("main", "before")
+        for (i in 0..8)
+        {
+            var but_vec: List<Button> = emptyList()
+            for (j in 0..8)
+            {
+                but_vec.plus()
+            }
+        }
+        Log.d("main", "after")
+
+    }*/
+
+
+    /*class attrs: AttributeSet {
+        override fun getPositionDescription():String{
+            return ""
+        }
+    }*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -269,22 +232,70 @@ class MainGameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main_game)
 
-
-        val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
+        /*val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
             Log.d("Map", "It has extra")
-            MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this, Buttons)
+            MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this)
         }
         else {
-            MapOfLabyrinth(null, this, Buttons)
+            MapOfLabyrinth(null, this)
         }
-        map.redraw(map.PlayerPosition)
+        map.redraw(map.PlayerPosition)*/
 
 
         Log.d("Tag", "Create")
 
+        val Buttons = Array(8){i -> Array(8){i -> ImageButton(this)}}
 
-        setContentView(R.layout.activity_main_game)
+        //ToDo
+        
+
+        /*val tr = TableRow(this)
+
+    tr.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT)
+
+
+    table.addView(tr)*/
+        
+        val n = 64
+        for (i in 0..7) {
+            for (j in 0..7)
+                {
+                    Buttons[i][j].layoutParams = TableRow.LayoutParams(50, 50)   //(this, attr)
+                    Buttons[i][j].setBackgroundResource(R.drawable.img_000)
+
+
+
+                    //button.text = "123"   <- Button
+
+
+                    //button.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                    //button.height = LinearLayout.LayoutParams.WRAP_CONTENT
+
+
+                    Buttons[i][j].id = (i.toString() + j.toString()).toInt()
+
+//                    val lp = LinearLayout.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT, 1.toFloat())
+//                    button.layoutParams = lp
+                }
+        }
+
+
+        for(i in 0 until n) {
+            val button = Buttons[i / 8][i % 8]
+            when (i / 8) {
+                0 -> tablerow1.addView(button)
+                1 -> tablerow2.addView(button)
+                2 -> tablerow3.addView(button)
+                3 -> tablerow4.addView(button)
+                4 -> tablerow5.addView(button)
+                5 -> tablerow6.addView(button)
+                6 -> tablerow7.addView(button)
+                7 -> tablerow8.addView(button)
+            }
+        }
+
 
 
         button_pause.setOnClickListener {
@@ -293,7 +304,7 @@ class MainGameActivity : AppCompatActivity() {
         }
 
 
-        button00.setOnClickListener{
+        /*button00.setOnClickListener{
             button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
             map.update(0, 0)
         }
@@ -549,7 +560,7 @@ class MainGameActivity : AppCompatActivity() {
             button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
             map.update(7, 7)
         }
-        
+        */
     }
 
     /*override fun onStart() {
