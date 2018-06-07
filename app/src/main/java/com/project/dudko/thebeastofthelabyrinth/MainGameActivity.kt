@@ -3,6 +3,7 @@ package com.project.dudko.thebeastofthelabyrinth
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.media.Image
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.AttributeSet
@@ -296,7 +297,11 @@ class MainGameActivity : AppCompatActivity() {
         }
 
 
-
+        for(i in 0..7)
+            for(j in 0..7)
+                findViewById<ImageButton>(Buttons[i][j]).setOnClickListener {
+                    findViewById<ImageButton>(Buttons[i][j]).setBackgroundColor(Color.BLACK)
+                }
 
         /*button00.setOnClickListener{
             button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
