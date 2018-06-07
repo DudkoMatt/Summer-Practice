@@ -150,7 +150,7 @@ class MainGameActivity : AppCompatActivity() {
                     }
         }
 
-        fun isCoinCollected(): Boolean{
+        fun isCoinCollected(): Boolean{  //ToDO: вставить в update
             if(PlayerPosition in CoinsPosition && PlayerPosition !in CollectedCoins){
                 CollectedCoins.add(PlayerPosition)
                 NumberOfCollectedCoins++
@@ -211,14 +211,6 @@ class MainGameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_game)
 
-        /*val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
-            Log.d("Map", "It has extra")
-            MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this)
-        }
-        else {
-            MapOfLabyrinth(null, this)
-        }
-        map.redraw(map.PlayerPosition)*/
 
 
         Log.d("Tag", "Create")
@@ -297,293 +289,26 @@ class MainGameActivity : AppCompatActivity() {
         }
 
 
+        val ButtonsView = Array(8){i -> Array(8){j -> findViewById<Button>(Buttons[i][j]) }}
+
+
+        val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
+            Log.d("Map", "It has extra")
+            MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this, ButtonsView)
+        }
+        else {
+            MapOfLabyrinth(null, this, ButtonsView)
+        }
+        map.redraw()
+
+
         for(i in 0..7)
             for(j in 0..7)
                 findViewById<ImageButton>(Buttons[i][j]).setOnClickListener {
-                    findViewById<ImageButton>(Buttons[i][j]).setBackgroundColor(Color.BLACK)
+                    map.update(i, j)
                 }
 
-        /*button00.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(0, 0)
-        }
-        button01.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(0, 1)
-        }
-        button02.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(0, 2)
-        }
-        button03.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(0, 3)
-        }
-        button04.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(0, 4)
-        }
-        button05.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(0, 5)
-        }
-        button06.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(0, 6)
-        }
-        button07.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(0, 7)
-        }
-        button10.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(1, 0)
-        }
-        button11.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(1, 1)
-        }
-        button12.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(1, 2)
-        }
-        button13.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(1, 3)
-        }
-        button14.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(1, 4)
-        }
-        button15.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(1, 5)
-        }
-        button16.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(1, 6)
-        }
-        button17.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(1, 7)
-        }
-        button20.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(2, 0)
-        }
-        button21.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(2, 1)
-        }
-        button22.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(2, 2)
-        }
-        button23.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(2, 3)
-        }
-        button24.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(2, 4)
-        }
-        button25.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(2, 5)
-        }
-        button26.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(2, 6)
-        }
-        button27.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(2, 7)
-        }
-        button30.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(3, 0)
-        }
-        button31.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(3, 1)
-        }
-        button32.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(3, 2)
-        }
-        button33.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(3, 3)
-        }
-        button34.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(3, 4)
-        }
-        button35.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(3, 5)
-        }
-        button36.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(3, 6)
-        }
-        button37.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(3, 7)
-        }
-        button40.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(4, 0)
-        }
-        button41.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(4, 1)
-        }
-        button42.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(4, 2)
-        }
-        button43.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(4, 3)
-        }
-        button44.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(4, 4)
-        }
-        button45.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(4, 5)
-        }
-        button46.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(4, 6)
-        }
-        button47.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(4, 7)
-        }
-        button50.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(5, 0)
-        }
-        button51.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(5, 1)
-        }
-        button52.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(5, 2)
-        }
-        button53.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(5, 3)
-        }
-        button54.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(5, 4)
-        }
-        button55.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(5, 5)
-        }
-        button56.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(5, 6)
-        }
-        button57.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(5, 7)
-        }
-        button60.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(6, 0)
-        }
-        button61.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(6, 1)
-        }
-        button62.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(6, 2)
-        }
-        button63.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(6, 3)
-        }
-        button64.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(6, 4)
-        }
-        button65.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(6, 5)
-        }
-        button66.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(6, 6)
-        }
-        button67.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(6, 7)
-        }
-        button70.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(7, 0)
-        }
-        button71.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(7, 1)
-        }
-        button72.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(7, 2)
-        }
-        button73.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(7, 3)
-        }
-        button74.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(7, 4)
-        }
-        button75.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(7, 5)
-        }
-        button76.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(7, 6)
-        }
-        button77.setOnClickListener{
-            button00.setBackgroundColor(Color.BLACK + (Random().nextInt()) % 16777216)
-            map.update(7, 7)
-        }
-        */
+
     }
 
-    /*override fun onStart() {
-        super.onStart()
-        Log.d("Tag", "Start")
-    }*/
-
-    /*override fun onResume() {
-        super.onResume()
-        Log.d("Tag", "Resume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("Tag", "Pause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("Tag", "Stop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("Tag", "Destroy")
-    }*/
 }
