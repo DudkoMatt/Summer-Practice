@@ -145,9 +145,18 @@ class MainGameActivity : AppCompatActivity() {
             noChange[4] = arrayOf(PlayerPosition[0], min(max(PlayerPosition[0]-1, 0), 7))
             for(i in 0..7)
                 for(j in 0..7)
-                    if(arrayOf(i, j) !in noChange){
+                    if(!checkXinY(arrayOf(i, j), noChange)){
                         buttons[i][j].setBackgroundColor(Color.BLACK)
                     }
+        }
+
+
+        fun checkXinY(x:Array<Int>, y:Array<Array<Int>>) : Boolean{
+            for(i in 0 until y.size){
+                if(x[0] == y[i][0] && x[1] == y[i][1])
+                    return true
+            }
+            return false
         }
 
         fun isCoinCollected(): Boolean{  //ToDO: вставить в update
@@ -306,6 +315,7 @@ class MainGameActivity : AppCompatActivity() {
             for(j in 0..7)
                 findViewById<ImageButton>(Buttons[i][j]).setOnClickListener {
                     map.update(i, j)
+                    Log.d("Msg", "Clicked on a button: i=$i; j=$j")
                 }
 
 
