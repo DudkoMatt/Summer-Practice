@@ -187,19 +187,21 @@ class MainGameActivity : AppCompatActivity() {
             }
 
         fun redraw(prev: Array<Int>){
+            map[prev[0]][prev[1]] -= 400
             if(!isCoinCollected()){
-                map[prev[0]][prev[1]] -= 400
                 map[PlayerPosition[0]][PlayerPosition[1]] += 400
 
-                for(i in 0..7){
-                    for(j in 0..7){
-                        context.findViewById<ImageButton>(i*10+j).setBackgroundResource()
-                    }
-                }
-
             } else {
-
+                map[PlayerPosition[0]][PlayerPosition[1]] += 300
             }
+
+            for(i in 0..7){
+                for(j in 0..7){
+                    val a = context.resources.getIdentifier("img_${fill_with_zeros(map[i][j])}", "drawable", context.packageName)
+                    context.findViewById<ImageButton>(i*10+j).setBackgroundResource(a)
+                }
+            }
+
         }
 
         fun isCoinCollected(): Boolean{  //ToDO: вставить в update
