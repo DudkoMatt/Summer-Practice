@@ -19,6 +19,14 @@ import kotlin.math.min
 class MainGameActivity : AppCompatActivity() {
 
     class MapOfLabyrinth(var id: Int? = null, context: Context, var buttons: Array<Array<ImageButton>>){
+
+        val imageResources = Array(15){i -> -1}   //ToDo: Как подгружать все картинки и их ID автоматически?
+        init {
+            for(i in 0..14){
+                imageResources[i] =
+            }
+        }
+
         /*
             Сопоставить картинки и id:
 
@@ -138,7 +146,7 @@ class MainGameActivity : AppCompatActivity() {
         }
 
         fun redraw(){
-            buttons[PlayerPosition[0]][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
+            buttons[PlayerPosition[0]][PlayerPosition[1]].setBackgroundResource()
             buttons[min(max(PlayerPosition[0]+1, 0), 7)][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
             buttons[PlayerPosition[0]][min(max(PlayerPosition[1]+1,0), 7)].setBackgroundColor(Color.GREEN)
             buttons[min(max(PlayerPosition[0]-1, 0), 7)][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
@@ -199,17 +207,14 @@ class MainGameActivity : AppCompatActivity() {
         init{
 
 
-            if(id == null) {
-                //ToDo: Понемять местами!!!
-                //ToDO: Задать объявление из файлов
+            if(id == null) { //ToDo: Понемять местами!!!
                 //ToDO: Задавать размеры из переменной
-                Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
 
-                var loaded_map = Array(8){i -> Array(8){i -> -1}}
+                Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
 
                 for(i in 0..7){
                     for(j in 0..7){
-                        loaded_map[i][j] = context.resources.getStringArray(R.array.map_1)[i].split(" ")[j].toInt()
+                        map[i][j] = context.resources.getStringArray(R.array.map_1)[i].split(" ")[j].toInt()
                     }
                 }
 
@@ -246,7 +251,7 @@ class MainGameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_game)
 
-
+        Log.d("Debug", resources.getIdentifier("img_000.jpg", "type/image", packageName).toString())
 
         Log.d("Tag", "Create")
 
