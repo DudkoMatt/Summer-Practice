@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ToDO: Как это работает??? -->
     <string-array name="map_0">
-        <item>7 1 1 1 1 1 1 5</item>
+        <item>407 1 1 1 1 1 1 5</item>
         <item>4 0 0 0 0 0 0 2</item>
         <item>4 0 0 0 0 0 0 2</item>
         <item>4 0 0 0 0 0 0 2</item>

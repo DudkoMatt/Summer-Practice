@@ -18,7 +18,7 @@ import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
 
-    class MapOfLabyrinth(var id: Int? = null, var context: Activity, var buttons: Array<Array<ImageButton>>, var imageR: MutableList<Int>){
+    class MapOfLabyrinth(var id: Int? = null, var context: Activity, var buttons: Array<Array<ImageButton>>){
 
           //ToDo: Как подгружать все картинки и их ID автоматически?
 
@@ -116,7 +116,7 @@ class MainGameActivity : AppCompatActivity() {
             415
          */
 
-        fun update(x: Int = 0, y: Int = 0): Boolean{
+        fun update(x: Int = 0, y: Int = 0, first: Boolean = false): Boolean{
             Log.d("Msg", "In update")
 
             val prev: Array<Int> = PlayerPosition
@@ -135,7 +135,10 @@ class MainGameActivity : AppCompatActivity() {
                 Log.d("Msg", "In if")
                 PlayerPosition[0] = x
                 PlayerPosition[1] = y
-                redraw(prev)
+                if(!first)
+                    redraw(prev)
+                else
+                    redraw()
             }
             Log.d("Msg", "After if")
             return false
@@ -186,8 +189,9 @@ class MainGameActivity : AppCompatActivity() {
                 else -> x.toString()
             }
 
-        fun redraw(prev: Array<Int>){
-            map[prev[0]][prev[1]] -= 400
+        fun redraw(prev: Array<Int>? = null){
+            if (prev != null) map[prev[0]][prev[1]] -= 400
+            Log.d("Msg", "0;0: ${map[0][0]}\n1;0: ${map[1][0]}\n0;1: ${map[0][1]}\n1;1: ${map[1][1]}\n")
             if(!isCoinCollected()){
                 map[PlayerPosition[0]][PlayerPosition[1]] += 400
 
@@ -195,8 +199,11 @@ class MainGameActivity : AppCompatActivity() {
                 map[PlayerPosition[0]][PlayerPosition[1]] += 300
             }
 
+            Log.d("Msg", "\n\n\n\n\n0;0: ${map[0][0]}\n1;0: ${map[1][0]}\n0;1: ${map[0][1]}\n1;1: ${map[1][1]}\n")
+
             for(i in 0..7){
                 for(j in 0..7){
+                   // Log.d("Msg", )
                     val a = context.resources.getIdentifier("img_${fill_with_zeros(map[i][j])}", "drawable", context.packageName)
                     context.findViewById<ImageButton>(i*10+j).setBackgroundResource(a)
                 }
@@ -351,19 +358,15 @@ class MainGameActivity : AppCompatActivity() {
 
         val ButtonsView = Array(8){i -> Array(8){j -> findViewById<ImageButton>(Buttons[i][j]) }}
 
-        var images = MutableList(15){i -> -1}
-        for(i in 0..14){
-            images.add(resources.getIdentifier("img_000", "drawable", packageName))
-        }
 
         val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
             Log.d("Map", "It has extra")
-            MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this, ButtonsView, images)
+            MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this, ButtonsView)
         }
         else {
-            MapOfLabyrinth(null, this, ButtonsView, images)
+            MapOfLabyrinth(null, this, ButtonsView)
         }
-        map.redraw(map.PlayerPosition)
+        map.update(map.PlayerPosition[0], map.PlayerPosition[1], first = true)
 
 
         for(i in 0..7)
