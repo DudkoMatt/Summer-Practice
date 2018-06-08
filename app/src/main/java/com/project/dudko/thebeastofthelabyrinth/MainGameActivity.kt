@@ -18,14 +18,9 @@ import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
 
-    class MapOfLabyrinth(var id: Int? = null, context: Context, var buttons: Array<Array<ImageButton>>){
+    class MapOfLabyrinth(var id: Int? = null, context: Context, var buttons: Array<Array<ImageButton>>, var imageR: MutableList<Int>){
 
-        val imageResources = Array(15){i -> -1}   //ToDo: Как подгружать все картинки и их ID автоматически?
-        init {
-            for(i in 0..14){
-                imageResources[i] =
-            }
-        }
+          //ToDo: Как подгружать все картинки и их ID автоматически?
 
         /*
             Сопоставить картинки и id:
@@ -145,8 +140,8 @@ class MainGameActivity : AppCompatActivity() {
             return false
         }
 
-        fun redraw(){
-            buttons[PlayerPosition[0]][PlayerPosition[1]].setBackgroundResource()
+        /*fun redraw(){  //Для демонстрации работы "lock"
+            buttons[PlayerPosition[0]][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
             buttons[min(max(PlayerPosition[0]+1, 0), 7)][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
             buttons[PlayerPosition[0]][min(max(PlayerPosition[1]+1,0), 7)].setBackgroundColor(Color.GREEN)
             buttons[min(max(PlayerPosition[0]-1, 0), 7)][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
@@ -181,6 +176,11 @@ class MainGameActivity : AppCompatActivity() {
                     return true
             }
             return false
+        }*/
+
+
+        fun redraw(){
+
         }
 
         fun isCoinCollected(): Boolean{  //ToDO: вставить в update
@@ -331,13 +331,17 @@ class MainGameActivity : AppCompatActivity() {
 
         val ButtonsView = Array(8){i -> Array(8){j -> findViewById<ImageButton>(Buttons[i][j]) }}
 
+        var images = MutableList(15){i -> -1}
+        for(i in 0..14){
+            images.add(resources.getIdentifier("img_000", "drawable", packageName))
+        }
 
         val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
             Log.d("Map", "It has extra")
-            MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this, ButtonsView)
+            MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this, ButtonsView, images)
         }
         else {
-            MapOfLabyrinth(null, this, ButtonsView)
+            MapOfLabyrinth(null, this, ButtonsView, images)
         }
         map.redraw()
 
