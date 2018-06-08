@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- ToDO: Как это работает??? -->
-    <string-array name="map_1">
+    <string-array name="map_0">
         <item>7 1 1 1 1 1 1 5</item>
         <item>4 0 0 0 0 0 0 2</item>
         <item>4 0 0 0 0 0 0 2</item>
@@ -11,4 +11,28 @@
         <item>4 0 0 0 0 0 0 2</item>
         <item>10 2 3 4 5 6 7 8</item>
     </string-array>
+
+    <string-array name="map_1">
+        <item>007 006 006 005 107 006 006 005</item>
+        <item>409 007 006 008 009 007 005 009</item>
+        <item>009 009 007 006 008 009 009 009</item>
+        <item>009 009 010 006 006 008 009 209</item>
+        <item>009 010 006 106 006 006 008 104</item>
+        <item>004 005 010 106 006 006 005 009</item>
+        <item>009 010 006 006 006 006 003 002</item>
+        <item>010 006 006 106 006 006 006 008</item>
+    </string-array>
+
+    <string-array name="map_2">
+        <item>007 006 006 005 007 006 006 105</item>
+        <item>009 014 001 102 009 007 005 009</item>
+        <item>010 012 009 009 009 013 009 009</item>
+        <item>414 005 009 009 010 012 009 009</item>
+        <item>007 008 009 010 006 005 004 200</item>
+        <item>009 014 002 014 106 003 008 009</item>
+        <item>010 006 002 014 006 006 006 002</item>
+        <item>014 006 108 014 006 006 006 108</item>
+    </string-array>
+
+
 </resources>
