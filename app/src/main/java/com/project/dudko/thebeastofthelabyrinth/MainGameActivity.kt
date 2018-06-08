@@ -200,9 +200,19 @@ class MainGameActivity : AppCompatActivity() {
 
 
             if(id == null) {
-                //ToDO: Поменять местами
+                //ToDo: Понемять местами!!!
                 //ToDO: Задать объявление из файлов
+                //ToDO: Задавать размеры из переменной
                 Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
+
+                var loaded_map = Array(8){i -> Array(8){i -> -1}}
+
+                for(i in 0..7){
+                    for(j in 0..7){
+                        loaded_map[i][j] = context.resources.getStringArray(R.array.map_1)[i].split(" ")[j].toInt()
+                    }
+                }
+
 
             } else {
                 map[0][0] = 7
