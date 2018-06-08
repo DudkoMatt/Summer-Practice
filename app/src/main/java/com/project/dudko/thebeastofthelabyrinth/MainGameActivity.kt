@@ -1,6 +1,6 @@
 package com.project.dudko.thebeastofthelabyrinth
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.media.Image
@@ -18,7 +18,7 @@ import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
 
-    class MapOfLabyrinth(var id: Int? = null, context: Context, var buttons: Array<Array<ImageButton>>, var imageR: MutableList<Int>){
+    class MapOfLabyrinth(var id: Int? = null, var context: Activity, var buttons: Array<Array<ImageButton>>, var imageR: MutableList<Int>){
 
           //ToDo: Как подгружать все картинки и их ID автоматически?
 
@@ -119,6 +119,7 @@ class MainGameActivity : AppCompatActivity() {
         fun update(x: Int = 0, y: Int = 0): Boolean{
             Log.d("Msg", "In update")
 
+            val prev: Array<Int> = PlayerPosition
             //ToDO: переходить на заключительный экран, в случае true. Или добавлять кнопку exit?
 
             if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1] && NumberOfCollectedCoins == CoinNumber){
@@ -134,7 +135,7 @@ class MainGameActivity : AppCompatActivity() {
                 Log.d("Msg", "In if")
                 PlayerPosition[0] = x
                 PlayerPosition[1] = y
-                redraw()
+                redraw(prev)
             }
             Log.d("Msg", "After if")
             return false
@@ -179,15 +180,32 @@ class MainGameActivity : AppCompatActivity() {
         }*/
 
 
-        fun redraw(){
+        fun fill_with_zeros(x: Int): String = when(x){
+                in 0..9 -> "00$x"
+                in 10..99 -> "0$x"
+                else -> x.toString()
+            }
 
+        fun redraw(prev: Array<Int>){
+            if(!isCoinCollected()){
+                map[prev[0]][prev[1]] -= 400
+                map[PlayerPosition[0]][PlayerPosition[1]] += 400
+
+                for(i in 0..7){
+                    for(j in 0..7){
+                        context.findViewById<ImageButton>(i*10+j).setBackgroundResource()
+                    }
+                }
+
+            } else {
+
+            }
         }
 
         fun isCoinCollected(): Boolean{  //ToDO: вставить в update
             if(PlayerPosition in CoinsPosition && PlayerPosition !in CollectedCoins){
                 CollectedCoins.add(PlayerPosition)
                 NumberOfCollectedCoins++
-                redraw()
                 return true
             }
             return false
@@ -343,7 +361,7 @@ class MainGameActivity : AppCompatActivity() {
         else {
             MapOfLabyrinth(null, this, ButtonsView, images)
         }
-        map.redraw()
+        map.redraw(map.PlayerPosition)
 
 
         for(i in 0..7)
