@@ -116,14 +116,26 @@ class MainGameActivity : AppCompatActivity() {
             415
          */
 
+        fun debug(){
+            for(i in 0..7){
+                var s = ""
+                for(j in 0..7){
+                    s += "${i};${j}: ${map[i][j]}   "
+                }
+                Log.d("Map", s+"\n")
+            }
+
+        }
+
         fun update(x: Int = 0, y: Int = 0, first: Boolean = false): Boolean{
             Log.d("Msg", "In update")
 
-            val prev: Array<Int> = PlayerPosition
+            if(first) redraw()
+
             //ToDO: переходить на заключительный экран, в случае true. Или добавлять кнопку exit?
 
             if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1] && NumberOfCollectedCoins == CoinNumber){
-                return true
+                //return true
             }
 
             Log.d("Msg", "Before if: x=$x; y=$y")
@@ -133,12 +145,11 @@ class MainGameActivity : AppCompatActivity() {
                     (PlayerPosition[0] == x && PlayerPosition[1] == y+1) ||
                     (PlayerPosition[0] == x+1 && PlayerPosition[1] == y)) { //ToDo: Стены
                 Log.d("Msg", "In if")
+                map[PlayerPosition[0]][PlayerPosition[1]] -= 400
                 PlayerPosition[0] = x
                 PlayerPosition[1] = y
-                if(!first)
-                    redraw(prev)
-                else
-                    redraw()
+                map[x][y] += 400
+                redraw()
             }
             Log.d("Msg", "After if")
             return false
@@ -189,21 +200,9 @@ class MainGameActivity : AppCompatActivity() {
                 else -> x.toString()
             }
 
-        fun redraw(prev: Array<Int>? = null){
-            if (prev != null) map[prev[0]][prev[1]] -= 400
-            Log.d("Msg", "0;0: ${map[0][0]}\n1;0: ${map[1][0]}\n0;1: ${map[0][1]}\n1;1: ${map[1][1]}\n")
-            if(!isCoinCollected()){
-                map[PlayerPosition[0]][PlayerPosition[1]] += 400
-
-            } else {
-                map[PlayerPosition[0]][PlayerPosition[1]] += 300
-            }
-
-            Log.d("Msg", "\n\n\n\n\n0;0: ${map[0][0]}\n1;0: ${map[1][0]}\n0;1: ${map[0][1]}\n1;1: ${map[1][1]}\n")
-
+        fun redraw(){
             for(i in 0..7){
                 for(j in 0..7){
-                   // Log.d("Msg", )
                     val a = context.resources.getIdentifier("img_${fill_with_zeros(map[i][j])}", "drawable", context.packageName)
                     context.findViewById<ImageButton>(i*10+j).setBackgroundResource(a)
                 }
@@ -234,20 +233,36 @@ class MainGameActivity : AppCompatActivity() {
         init{
 
 
-            if(id == null) { //ToDo: Понемять местами!!!
+            if(id != null) { //ToDo: Понемять местами!!!
                 //ToDO: Задавать размеры из переменной
 
-                Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
+                //Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
 
                 for(i in 0..7){
                     for(j in 0..7){
-                        map[i][j] = context.resources.getStringArray(R.array.map_1)[i].split(" ")[j].toInt()
+                        map[i][j] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[i].split(" ")[j].toInt()
+                        if(map[i][j] >= 400){
+                            PlayerPosition[0] = i
+                            PlayerPosition[1] = j
+                        }
+                        if(map[i][j] in 200..299){
+                            EnemyPosition[0] = i
+                            EnemyPosition[1] = j
+                        }
+                        if(map[i][j] in 100..199){
+                            //ToDO: Coins
+                        }
+                        if(map[i][j] in 300..399){
+                            EnemyPosition[0] = i
+                            EnemyPosition[1] = j
+                            //ToDO: Coins
+                        }
                     }
                 }
 
 
             } else {
-                map[0][0] = 7
+                map[0][0] = 407
                 map[0][7] = 5
                 map[7][0] = 10
                 map[7][7] = 8
@@ -368,12 +383,14 @@ class MainGameActivity : AppCompatActivity() {
         }
         map.update(map.PlayerPosition[0], map.PlayerPosition[1], first = true)
 
+        map.debug()
 
         for(i in 0..7)
             for(j in 0..7)
                 findViewById<ImageButton>(Buttons[i][j]).setOnClickListener {
+                    map.debug()
                     map.update(i, j)
-                    Log.d("Msg", "Clicked on a button: i=$i; j=$j;                        Player's Position: x=${map.PlayerPosition[0]}; y=${map.PlayerPosition[1]}")
+                    //Log.d("Msg", "Clicked on a button: i=$i; j=$j;                        Player's Position: x=${map.PlayerPosition[0]}; y=${map.PlayerPosition[1]}")
                 }
 
 
