@@ -82,13 +82,6 @@ class MainGameActivity : AppCompatActivity() {
 
             if(first) redraw()
 
-            //ToDO: переходить на заключительный экран, в случае true. Или добавлять кнопку exit?
-
-            if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1] && NumberOfCollectedCoins == CoinNumber){
-                val intent = Intent(context, SuccessEndScreenActivity::class.java)
-                context.startActivityForResult(intent, 1)
-            }
-
             Log.d("Msg", "Before if: x=$x; y=$y")
 
 
@@ -113,6 +106,13 @@ class MainGameActivity : AppCompatActivity() {
                 //redraw()
             }
             Log.d("Msg", "After if")
+
+            //ToDO: переходить на заключительный экран, в случае true. Или добавлять кнопку exit?
+
+            if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1] && NumberOfCollectedCoins == CoinNumber){
+                val intent = Intent(context, SuccessEndScreenActivity::class.java)
+                context.startActivityForResult(intent, 1)
+            }
         }
 
         /*fun redraw(){  //Для демонстрации работы "lock"
@@ -214,7 +214,7 @@ class MainGameActivity : AppCompatActivity() {
 
         //ToDo: создать ID выхода -> 900
 
-        var map = MutableList(2){i -> MutableList(2){0} }
+        var map = MutableList(0){i -> MutableList(2){0} }
         init{
 
 
@@ -229,28 +229,30 @@ class MainGameActivity : AppCompatActivity() {
 
 
                 CoinNumber = 0
-                for(i in 2 until num_x){
-                    for(j in 2 until num_y){
-                        map[i][j] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[i].split(" ")[j].toInt()
-                        if(map[i][j] >= 400){
-                            PlayerPosition[0] = i
+                for(i in 2 until num_x+2){
+                    var tmp = MutableList(num_y){0}
+                    for(j in 0 until num_y){
+                        tmp[j] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[i].split(" ")[j].toInt()
+                        if(tmp[j] >= 400){
+                            PlayerPosition[0] = i-2
                             PlayerPosition[1] = j
                         }
-                        if(map[i][j] in 200..299){
-                            EnemyPosition[0] = i
+                        if(tmp[j] in 200..299){
+                            EnemyPosition[0] = i-2
                             EnemyPosition[1] = j
                         }
-                        if(map[i][j] in 100..199){
-                            CoinsPosition.add(listOf(i, j))
+                        if(tmp[j] in 100..199){
+                            CoinsPosition.add(listOf(i-2, j))
                             CoinNumber++
                         }
-                        if(map[i][j] in 300..399){
-                            EnemyPosition[0] = i
+                        if(tmp[j] in 300..399){
+                            EnemyPosition[0] = i-2
                             EnemyPosition[1] = j
-                            CoinsPosition.add(listOf(i, j))
+                            CoinsPosition.add(listOf(i-2, j))
                             CoinNumber++
                         }
                     }
+                    map.add(tmp)
                 }
 
 
