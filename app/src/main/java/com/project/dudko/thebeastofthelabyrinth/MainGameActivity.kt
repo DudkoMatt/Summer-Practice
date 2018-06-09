@@ -140,16 +140,21 @@ class MainGameActivity : AppCompatActivity() {
 
             Log.d("Msg", "Before if: x=$x; y=$y")
 
+
+            //ToDO: redraw для монстра
+
             if ((PlayerPosition[0] == x-1 && PlayerPosition[1] == y) ||
                     (PlayerPosition[0] == x && PlayerPosition[1] == y-1) ||
                     (PlayerPosition[0] == x && PlayerPosition[1] == y+1) ||
                     (PlayerPosition[0] == x+1 && PlayerPosition[1] == y)) { //ToDo: Стены
                 Log.d("Msg", "In if")
                 map[PlayerPosition[0]][PlayerPosition[1]] -= 400
+                fast_redraw(PlayerPosition[0], PlayerPosition[1])
                 PlayerPosition[0] = x
                 PlayerPosition[1] = y
                 map[x][y] += 400
-                redraw()
+                fast_redraw(PlayerPosition[0], PlayerPosition[1])
+                //redraw()
             }
             Log.d("Msg", "After if")
             return false
@@ -208,6 +213,11 @@ class MainGameActivity : AppCompatActivity() {
                 }
             }
 
+        }
+
+        fun fast_redraw(x: Int, y: Int){
+            val a = context.resources.getIdentifier("img_${fill_with_zeros(map[x][y])}", "drawable", context.packageName)
+            context.findViewById<ImageButton>(x*10+y).setBackgroundResource(a)
         }
 
         fun isCoinCollected(): Boolean{  //ToDO: вставить в update
