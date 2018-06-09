@@ -77,7 +77,7 @@ class MainGameActivity : AppCompatActivity() {
 
         }
 
-        fun update(x: Int = 0, y: Int = 0, first: Boolean = false): Boolean{
+        fun update(x: Int = 0, y: Int = 0, first: Boolean = false){
             Log.d("Msg", "In update")
 
             if(first) redraw()
@@ -85,7 +85,8 @@ class MainGameActivity : AppCompatActivity() {
             //ToDO: переходить на заключительный экран, в случае true. Или добавлять кнопку exit?
 
             if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1] && NumberOfCollectedCoins == CoinNumber){
-                //return true
+                val intent = Intent(context, SuccessEndScreenActivity::class.java)
+                context.startActivityForResult(intent, 1)
             }
 
             Log.d("Msg", "Before if: x=$x; y=$y")
@@ -112,7 +113,6 @@ class MainGameActivity : AppCompatActivity() {
                 //redraw()
             }
             Log.d("Msg", "After if")
-            return false
         }
 
         /*fun redraw(){  //Для демонстрации работы "lock"
@@ -210,22 +210,27 @@ class MainGameActivity : AppCompatActivity() {
         var CollectedCoins = MutableList(CoinNumber){i -> List(2){i -> 0}}
         var NumberOfCollectedCoins = 0
 
-        var ExitPosition = Array(2){i -> 0} //Учитывать, что выход сдвинут вне карты на одну клетку
+        var ExitPosition = Array(2){i -> 0} //Учитывать, что выход не сдвинут вне карты на одну клетку
 
         //ToDo: создать ID выхода -> 900
 
-        var map = Array(8){i -> Array(8){0}}
+        var map = MutableList(2){i -> MutableList(2){0} }
         init{
 
 
-            if(id != null) { //ToDo: Понемять местами!!!
-                //ToDO: Задавать размеры из переменной
-                //ToDo: создать ID выхода -> 900
-
+            if(id != null) {
                 //Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
+
+                val num_x = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[0].split(" ")[0].toInt()
+                val num_y =context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[0].split(" ")[1].toInt()
+                ExitPosition[0] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[1].split(" ")[0].toInt()
+                ExitPosition[1] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[1].split(" ")[1].toInt()
+
+
+
                 CoinNumber = 0
-                for(i in 0..7){
-                    for(j in 0..7){
+                for(i in 2 until num_x){
+                    for(j in 2 until num_y){
                         map[i][j] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[i].split(" ")[j].toInt()
                         if(map[i][j] >= 400){
                             PlayerPosition[0] = i
