@@ -43,50 +43,50 @@
 
         <Button
             android:id="@+id/start"
-            android:layout_width="120dp"
+            android:layout_width="140dp"
             android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="25dp"
-            android:layout_marginHorizontal="50dp"
+            android:layout_marginHorizontal="30dp"
             android:layout_marginTop="30dp"
             android:text="Start"
             android:fontFamily="@font/atomic_age"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/options"
-            android:layout_width="120dp"
+            android:layout_width="140dp"
             android:layout_height="70dp"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="25dp"
-            android:layout_marginHorizontal="50dp"
+            android:layout_marginHorizontal="30dp"
             android:layout_marginTop="30dp"
             android:text="Options"
             android:fontFamily="@font/atomic_age"
-            android:textSize="20sp"
+            android:textSize="30sp"
             />
 
         <Button
             android:id="@+id/about"
-            android:layout_width="120dp"
+            android:layout_width="140dp"
             android:layout_height="70dp"
             android:layout_below="@id/start"
             android:layout_marginBottom="25dp"
-            android:layout_marginHorizontal="50dp"
+            android:layout_marginHorizontal="30dp"
             android:text="About"
             android:fontFamily="@font/atomic_age"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/help"
-            android:layout_width="120dp"
+            android:layout_width="140dp"
             android:layout_height="70dp"
             android:layout_alignStart="@id/options"
             android:layout_below="@id/options"
             android:layout_marginBottom="25dp"
             android:text="Help"
             android:fontFamily="@font/atomic_age"
-            android:textSize="20sp"
+            android:textSize="30sp"
 
             />
 

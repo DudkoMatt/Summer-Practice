@@ -10,8 +10,9 @@
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back"
-         />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Back" />
 
 
     <Button
@@ -20,7 +21,7 @@
         android:layout_height="wrap_content"
         android:text="1"
         android:textSize="20sp"
-        android:layout_below="@id/button_back"
+
 
         />
 
@@ -28,8 +29,19 @@
         android:id="@+id/button_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button_back"
-        android:layout_toEndOf="@id/button_1"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="106dp"
         android:text="2"
         android:textSize="20sp" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="96dp"
+        app:srcCompat="@android:color/holo_orange_dark" />
 </RelativeLayout>
