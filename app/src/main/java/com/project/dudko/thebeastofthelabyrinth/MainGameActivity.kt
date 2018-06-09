@@ -3,6 +3,7 @@ package com.project.dudko.thebeastofthelabyrinth
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Point
 import android.media.Image
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -39,8 +40,7 @@ class MainGameActivity : AppCompatActivity() {
                 11 to "D",
                 12 to "L",
                 13 to "U",
-                14 to "R"
-                )
+                14 to "R")
 
         fun isTrunAvaliable(to_x: Int, to_y: Int): Boolean{
             if(to_x - PlayerPosition[0] == -1){  //U
@@ -300,13 +300,21 @@ class MainGameActivity : AppCompatActivity() {
 
     table.addView(tr)*/
 
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getRealSize(size)
+
+
+        val num_x = resources.getStringArray(resources.getIdentifier("map_${intent.getStringExtra("Id_Of_Level").toInt()}", "array", packageName))[0].split(" ")[0].toInt()
+        val num_y = resources.getStringArray(resources.getIdentifier("map_${intent.getStringExtra("Id_Of_Level").toInt()}", "array", packageName))[0].split(" ")[1].toInt()
+
         val n = 64
         for (i in 0..7) {
             for (j in 0..7)
             {
                 //Log.d("Cre", "base_width: ${baselayout.width}\nbase_heigth: ${baselayout.height}")
                 val button = ImageButton(this)
-                button.layoutParams = TableRow.LayoutParams(0, 175, 1f)//baselayout.width/8, (baselayout.height*0.7/8).toInt(), 1f)
+                button.layoutParams = TableRow.LayoutParams(size.y / num_y, (size.x / num_x).toInt(), 1f)//baselayout.width/8, (baselayout.height*0.7/8).toInt(), 1f)
                 button.setBackgroundResource(R.drawable.img_000)
 
 
