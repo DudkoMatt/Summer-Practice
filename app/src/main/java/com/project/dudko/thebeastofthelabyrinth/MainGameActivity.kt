@@ -20,103 +20,53 @@ class MainGameActivity : AppCompatActivity() {
 
     class MapOfLabyrinth(var id: Int? = null, var context: Activity, var buttons: Array<Array<ImageButton>>){
 
-          //ToDo: Как подгружать все картинки и их ID автоматически?
 
-        /*
-            Сопоставить картинки и id:
+        //Ввод ID стен (без указания того, что есть в клетке)
+        //Вывод: строка, содержащая 4 символа: LURD
+        //Если на месте стоит -, значит ход в данную сторону невожможен
+        val avaliable_turns = hashMapOf(
+                0 to "LURD",
+                1 to "LRD",
+                2 to "LUD",
+                3 to "LUR",
+                4 to "URD",
+                5 to "LD",
+                6 to "LR",
+                7 to "RD",
+                8 to "LU",
+                9 to "UD",
+                10 to "UR",
+                11 to "D",
+                12 to "L",
+                13 to "U",
+                14 to "R"
+                )
 
-            //только стены
-            000
-            001
-            002
-            003
-            004
-            005
-            006
-            007
-            008
-            009
-            010
-            011
-            012
-            013
-            014
-            015
+        fun isTrunAvaliable(to_x: Int, to_y: Int): Boolean{
+            if(to_x - PlayerPosition[0] == -1){  //U
+                if(avaliable_turns[map[PlayerPosition[0]][PlayerPosition[1]] % 100]!!.contains("U"))
+                    return true
+                return false
+            }
+            if(to_x - PlayerPosition[0] == 1){   //D
+                if(avaliable_turns[map[PlayerPosition[0]][PlayerPosition[1]] % 100]!!.contains("D"))
+                    return true
+                return false
+            }
+            if(to_y - PlayerPosition[1] == -1){  //L
+                if(avaliable_turns[map[PlayerPosition[0]][PlayerPosition[1]] % 100]!!.contains("L"))
+                    return true
+                return false
+            }
+            if(to_y - PlayerPosition[1] == 1){   //R
+                if(avaliable_turns[map[PlayerPosition[0]][PlayerPosition[1]] % 100]!!.contains("R"))
+                    return true
+                return false
+            }
+            return false
+        }
 
-            //+ монета
-            100
-            101
-            102
-            103
-            104
-            105
-            106
-            107
-            108
-            109
-            110
-            111
-            112
-            113
-            114
-            115
-
-            //+ кентавр
-            200
-            201
-            202
-            203
-            204
-            205
-            206
-            207
-            208
-            209
-            210
-            211
-            212
-            213
-            214
-            215
-
-            //+ кентавр / монета
-            300
-            301
-            302
-            303
-            304
-            305
-            306
-            307
-            308
-            309
-            310
-            311
-            312
-            313
-            314
-            315
-
-            //+ игрок
-            400
-            401
-            402
-            403
-            404
-            405
-            406
-            407
-            408
-            409
-            410
-            411
-            412
-            413
-            414
-            415
-         */
-
-        fun debug(){
+        fun debug(){ //ToDO: remove in final version
             for(i in 0..7){
                 var s = ""
                 for(j in 0..7){
@@ -143,10 +93,11 @@ class MainGameActivity : AppCompatActivity() {
 
             //ToDO: redraw для монстра
 
-            if ((PlayerPosition[0] == x-1 && PlayerPosition[1] == y) ||
+            if (((PlayerPosition[0] == x-1 && PlayerPosition[1] == y) ||
                     (PlayerPosition[0] == x && PlayerPosition[1] == y-1) ||
                     (PlayerPosition[0] == x && PlayerPosition[1] == y+1) ||
-                    (PlayerPosition[0] == x+1 && PlayerPosition[1] == y)) { //ToDo: Стены
+                    (PlayerPosition[0] == x+1 && PlayerPosition[1] == y)) &&
+                    isTrunAvaliable(x, y)) { //ToDo: Стены
                 Log.d("Msg", "In if")
                 map[PlayerPosition[0]][PlayerPosition[1]] -= 400
                 fast_redraw(PlayerPosition[0], PlayerPosition[1])
