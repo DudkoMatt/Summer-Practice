@@ -103,7 +103,11 @@ class MainGameActivity : AppCompatActivity() {
                 fast_redraw(PlayerPosition[0], PlayerPosition[1])
                 PlayerPosition[0] = x
                 PlayerPosition[1] = y
-                map[x][y] += 400
+                if (isCoinCollected()){
+                    map[x][y] += 300
+                } else {
+                    map[x][y] += 400
+                }
                 fast_redraw(PlayerPosition[0], PlayerPosition[1])
                 //redraw()
             }
@@ -172,23 +176,43 @@ class MainGameActivity : AppCompatActivity() {
         }
 
         fun isCoinCollected(): Boolean{  //ToDO: вставить в update
-            if(PlayerPosition in CoinsPosition && PlayerPosition !in CollectedCoins){
-                CollectedCoins.add(PlayerPosition)
+            if(check_in_coins_position() && !check_in_collected_coins()){
+                CollectedCoins.add(PlayerPosition.toList())
                 NumberOfCollectedCoins++
                 return true
             }
             return false
         }
 
+        fun check_in_coins_position(): Boolean{
+            for(i in CoinsPosition){
+                if(PlayerPosition[0] == i[0] && PlayerPosition[1] == i[1]){
+                    return true
+                }
+            }
+            return false
+        }
+
+        fun check_in_collected_coins(): Boolean{
+            for(i in CollectedCoins){
+                if(PlayerPosition[0] == i[0] && PlayerPosition[1] == i[1]){
+                    return true
+                }
+            }
+            return false
+        }
+
         var EnemyPosition = Array(2){i -> 0}
         var PlayerPosition = Array(2){i -> 0}
-        var CoinNumber = 5
-        var CoinsPosition = Array(CoinNumber){i -> Array(2){i -> 0}}
+        var CoinNumber = 0
+        var CoinsPosition = MutableList(CoinNumber){i -> List(2){i -> 0}}
 
-        var CollectedCoins = MutableList(0){i -> Array(2){i -> 0}}
+        var CollectedCoins = MutableList(CoinNumber){i -> List(2){i -> 0}}
         var NumberOfCollectedCoins = 0
 
-        var ExitPosition = Array(2){i -> 0} //Учитывать, что выход сдвинут вне каоты на одну клетку
+        var ExitPosition = Array(2){i -> 0} //Учитывать, что выход сдвинут вне карты на одну клетку
+
+        //ToDo: создать ID выхода -> 900
 
         var map = Array(8){i -> Array(8){0}}
         init{
@@ -196,9 +220,10 @@ class MainGameActivity : AppCompatActivity() {
 
             if(id != null) { //ToDo: Понемять местами!!!
                 //ToDO: Задавать размеры из переменной
+                //ToDo: создать ID выхода -> 900
 
                 //Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
-
+                CoinNumber = 0
                 for(i in 0..7){
                     for(j in 0..7){
                         map[i][j] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[i].split(" ")[j].toInt()
@@ -211,12 +236,14 @@ class MainGameActivity : AppCompatActivity() {
                             EnemyPosition[1] = j
                         }
                         if(map[i][j] in 100..199){
-                            //ToDO: Coins
+                            CoinsPosition.add(listOf(i, j))
+                            CoinNumber++
                         }
                         if(map[i][j] in 300..399){
                             EnemyPosition[0] = i
                             EnemyPosition[1] = j
-                            //ToDO: Coins
+                            CoinsPosition.add(listOf(i, j))
+                            CoinNumber++
                         }
                     }
                 }
@@ -257,10 +284,6 @@ class MainGameActivity : AppCompatActivity() {
         Log.d("Debug", resources.getIdentifier("img_000.jpg", "type/image", packageName).toString())
 
         Log.d("Tag", "Create")
-
-
-
-        //ToDo
 
 
         /*val tr = TableRow(this)
