@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--
+    1ая строка: размеры: количество строк; столбцов: 8 8
+    2ая строка: координаты выхода: 0 0
+    3я - ... строка: построчная задача карты по ID
+    -->
+
     <string-array name="map_0">
+        <item>8 8</item>
+        <item>7 8</item>
         <item>407 1 1 1 1 1 1 5</item>
         <item>4 0 0 0 0 0 0 2</item>
         <item>4 0 0 0 0 0 0 2</item>
         <item>4 0 0 0 0 0 0 2</item>
         <item>4 0 0 0 0 0 0 2</item>
         <item>4 0 0 0 0 0 0 2</item>
-        <item>4 0 0 0 0 0 0 2</item>
+        <item>4 0 0 0 0 0 0 0</item>
         <item>10 3 3 3 3 3 3 8</item>
     </string-array>
 
     <string-array name="map_1">
+        <item>8 8</item>
+        <item>4 7</item>
         <item>007 006 006 005 107 006 006 005</item>
         <item>409 007 006 008 009 007 005 009</item>
         <item>009 009 007 006 008 009 009 009</item>
