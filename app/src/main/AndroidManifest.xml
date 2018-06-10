@@ -20,23 +20,28 @@
         </activity>
         <activity
             android:name=".MainGameActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PauseActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".LevelSelector"></activity>
+        <activity
+            android:name=".LevelSelector"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".About"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Help"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".EndOfTheLevelActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".FailEndScreenActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SuccessEndScreenActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
