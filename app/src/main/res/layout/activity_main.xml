@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Back" />
+        android:text="@string/back" />
 
     <ListView
         android:id="@+id/list2"
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/list2"
-        android:textSize="30px"
-        android:layout_marginTop="50px"
-        android:text="Version: 1.0" />
+        android:textSize="30sp"
+        android:layout_marginTop="50sp"
+        android:text="@string/version" />
 </RelativeLayout>
