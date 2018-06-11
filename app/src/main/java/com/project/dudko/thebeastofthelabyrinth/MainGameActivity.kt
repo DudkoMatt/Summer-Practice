@@ -400,6 +400,8 @@ class MainGameActivity : AppCompatActivity() {
         }
     }
 
+    var elapsedTime = 0L
+
     val REQUEST_EXIT = 1
     //0 - продолжить
     //1 - выйти
@@ -528,6 +530,23 @@ class MainGameActivity : AppCompatActivity() {
                 }
 
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        chronometr.stop()
+        elapsedTime = SystemClock.elapsedRealtime() - chronometr.base
+    }
+
+    override fun onResume() {
+        super.onResume()
+        chronometr.base = SystemClock.elapsedRealtime() - elapsedTime
+        chronometr.start()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, PauseActivity::class.java)
+        startActivityForResult(intent, REQUEST_EXIT)
     }
 
 }
