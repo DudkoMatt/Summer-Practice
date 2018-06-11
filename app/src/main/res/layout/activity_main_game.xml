@@ -17,6 +17,26 @@
         android:textSize="25sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/timerview"
+        android:layout_below="@id/level_text"
+        android:layout_alignLeft="@id/level_text"
+        android:text="@string/timer"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Chronometer
+        android:id="@+id/chronometr"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:layout_alignTop="@id/timerview"
+        android:layout_toRightOf="@id/timerview"
+        android:layout_marginLeft="3dp"
+        android:layout_alignBottom="@id/timerview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     
     <Button
         style="?android:attr/buttonBarButtonStyle"

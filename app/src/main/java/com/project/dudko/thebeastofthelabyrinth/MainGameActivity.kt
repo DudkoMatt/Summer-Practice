@@ -8,6 +8,7 @@ import android.graphics.Point
 import android.media.Image
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.Log
@@ -417,7 +418,8 @@ class MainGameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_game)
 
-        Log.d("Debug", resources.getIdentifier("img_000.jpg", "type/image", packageName).toString())
+        chronometr.base = SystemClock.elapsedRealtime()
+        chronometr.start()
 
         Log.d("Tag", "Create")
 
