@@ -27,5 +27,11 @@ class StartActivity : AppCompatActivity() {
             val intent3 = Intent( this, LevelSelector::class.java )
             startActivity(intent3)
         }
+
+        options.setOnClickListener {
+            val intent4 = Intent( this, Options::class.java)
+            startActivity(intent4)
+        }
+
 }
 }
