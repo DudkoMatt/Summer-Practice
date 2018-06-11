@@ -1,12 +1,14 @@
 package com.project.dudko.thebeastofthelabyrinth
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
 import android.media.Image
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.Log
 import android.view.ViewGroup
@@ -77,10 +79,20 @@ class MainGameActivity : AppCompatActivity() {
 
         }
 
-        fun update(x: Int = 0, y: Int = 0, first: Boolean = false){
+        fun update(x: Int = 0, y: Int = 0, first: Boolean = false, darkMode: Boolean = false){
             Log.d("Msg", "In update")
 
-            if(first) redraw()
+            if(first) {
+                if (!darkMode){
+                    redraw()
+                }
+                if (darkMode){
+                    // Отрисовали все поле черным
+                    redrawWithBlack()
+                    // Отрисовали игрока
+                    drawPers(PlayerPosition[0], PlayerPosition[1])
+                }
+            }
 
             Log.d("Msg", "Before if: x=$x; y=$y")
 
@@ -94,7 +106,10 @@ class MainGameActivity : AppCompatActivity() {
                     isTrunAvaliable(x, y)) { //ToDo: Стены
                 Log.d("Msg", "In if")
                 map[PlayerPosition[0]][PlayerPosition[1]] -= 400
+                // обновил, откуда ушел
                 fast_redraw(PlayerPosition[0], PlayerPosition[1])
+                val oldX = PlayerPosition[0]
+                val oldY = PlayerPosition[1]
                 PlayerPosition[0] = x
                 PlayerPosition[1] = y
                 if (isCoinCollected()){
@@ -102,7 +117,14 @@ class MainGameActivity : AppCompatActivity() {
                 } else {
                     map[x][y] += 400
                 }
-                fast_redraw(PlayerPosition[0], PlayerPosition[1])
+                // обновил, куда пришел
+                if (!darkMode){
+                    fast_redraw(PlayerPosition[0], PlayerPosition[1])
+                }
+                if(darkMode){
+                    redrawWithBlack(oldX, oldY, PlayerPosition[0], PlayerPosition[1])
+                }
+
                 //redraw()
             }
             Log.d("Msg", "After if")
@@ -167,13 +189,114 @@ class MainGameActivity : AppCompatActivity() {
                     context.findViewById<ImageButton>(i*10+j).setBackgroundResource(a)
                 }
             }
-
         }
 
         fun fast_redraw(x: Int, y: Int){
-            val a = context.resources.getIdentifier("img_${fill_with_zeros(map[x][y])}", "drawable", context.packageName)
-            context.findViewById<ImageButton>(x*10+y).setBackgroundResource(a)
+            if (x in 0..7 && y in 0..7) {
+                val a = context.resources.getIdentifier("img_${fill_with_zeros(map[x][y])}", "drawable", context.packageName)
+                context.findViewById<ImageButton>(x * 10 + y).setBackgroundResource(a)
+            }
         }
+
+        // все отрисовываем черным
+        fun redrawWithBlack(){
+            for(i in 0..7){
+                for(j in 0..7){
+                    val black = ContextCompat.getColor(context, R.color.black)
+                    context.findViewById<ImageButton>(i*10+j).setBackgroundColor(black)
+                }
+            }
+        }
+
+        // дали позицию, рисуем норм фон в радиусе
+        fun drawPers(x:Int, y:Int){
+            for(i in 0..1){
+                for (j in 0..1){
+                    // чтобы 4 раза одна клетка не обновлялась
+                    if (i == 0 && j == 0){
+                        fast_redraw(x, y)
+                    }
+                    else{
+                        if ((x - i) >= 0 && (y-j) >= 0)
+                            fast_redraw(x-i, y-j)
+
+                        if ((x - i) >= 0 && (y+j) <= 7)
+                            fast_redraw(x-i, y+j)
+
+                        if ((x + i) <= 7 && (y+j) <= 7)
+                            fast_redraw(x+i, y+j)
+
+                        if ((x + i) <= 7 && (y-j) >= 0)
+                            fast_redraw(x+i, y-j)
+                    }
+                }
+            }
+        }
+
+        fun redrawWithBlack(oldX:Int, oldY:Int, newX:Int, newY:Int){
+            fast_redraw(newX, newY)
+            // x вертикаль; y горизонталь
+            // сходили по вертикали
+            if (oldY == newY){
+                // Ходили вверх
+                if (newX < oldX){
+                    // черним всю линию на oldX + 1
+                    fastRedrawWithBlack(oldX+1, newY-1)
+                    fastRedrawWithBlack(oldX+1, newY)
+                    fastRedrawWithBlack(oldX+1, newY+1)
+                    // прорисовывем линию на newX - 1
+                    fast_redraw(newX-1, newY-1)
+                    fast_redraw(newX-1, newY)
+                    fast_redraw(newX-1, newY+1)
+                }
+                // ходили вниз
+                else{
+                    // черним всю линию на oldX - 1
+                    fastRedrawWithBlack(oldX-1, newY-1)
+                    fastRedrawWithBlack(oldX-1, newY)
+                    fastRedrawWithBlack(oldX-1, newY+1)
+                    // прорисовывем линию на newX + 1
+                    fast_redraw(newX+1, newY-1)
+                    fast_redraw(newX+1, newY)
+                    fast_redraw(newX+1, newY+1)
+                }
+            }
+            // сходили по горизонтали
+            if(oldX == newX){
+                // ходили вправо
+                if (newY > oldY){
+                    // черним всю линию по oldY-1
+                    fastRedrawWithBlack(oldX-1, oldY-1)
+                    fastRedrawWithBlack(oldX, oldY-1)
+                    fastRedrawWithBlack(oldX+1, oldY-1)
+                    // прорисовывем всю линию по newY + 1
+                    fast_redraw(newX-1, newY+1)
+                    fast_redraw(newX, newY+1)
+                    fast_redraw(newX+1, newY+1)
+                }
+                // ходили влево
+                else{
+                    // черним всю линию по oldY + 1
+                    fastRedrawWithBlack(oldX-1, oldY+1)
+                    fastRedrawWithBlack(oldX, oldY+1)
+                    fastRedrawWithBlack(oldX+1, oldY+1)
+                    // отрисовываем линию по newY-1
+                    fast_redraw(newX-1, newY-1)
+                    fast_redraw(newX, newY-1)
+                    fast_redraw(newX+1, newY-1)
+                }
+            }
+        }
+
+        // одну кнопку отрисовываем черным
+        fun fastRedrawWithBlack(x: Int, y: Int){
+            if (x in 0..7 && y in 0..7){
+                val black = ContextCompat.getColor(context, R.color.black)
+                context.findViewById<ImageButton>(x*10+y).setBackgroundColor(black)
+            }
+        }
+
+
 
         fun isCoinCollected(): Boolean{  //ToDO: вставить в update
             if(check_in_coins_position() && !check_in_collected_coins()){
@@ -215,6 +338,7 @@ class MainGameActivity : AppCompatActivity() {
         //ToDo: создать ID выхода -> 900
 
         var map = MutableList(0){i -> MutableList(2){0} }
+
         init{
 
 
@@ -380,7 +504,11 @@ class MainGameActivity : AppCompatActivity() {
         else {
             MapOfLabyrinth(null, this, ButtonsView)
         }
-        map.update(map.PlayerPosition[0], map.PlayerPosition[1], first = true)
+
+        val sPref = getSharedPreferences("System", Context.MODE_PRIVATE)
+        val darkMode = sPref.getBoolean("darkMode", false)
+
+        map.update(map.PlayerPosition[0], map.PlayerPosition[1], first = true, darkMode = darkMode)
 
         map.debug()
 
@@ -388,7 +516,7 @@ class MainGameActivity : AppCompatActivity() {
             for(j in 0..7)
                 findViewById<ImageButton>(Buttons[i][j]).setOnClickListener {
                     map.debug()
-                    map.update(i, j)
+                    map.update(i, j, darkMode = darkMode)
                     //Log.d("Msg", "Clicked on a button: i=$i; j=$j;                        Player's Position: x=${map.PlayerPosition[0]}; y=${map.PlayerPosition[1]}")
                 }
 

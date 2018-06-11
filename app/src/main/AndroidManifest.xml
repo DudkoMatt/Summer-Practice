@@ -38,6 +38,8 @@
         <activity
             android:name=".Help"
             android:screenOrientation="portrait" />
+        <activity android:name=".Options"
+            android:screenOrientation="portrait" />
         <activity android:name=".FailEndScreenActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".SuccessEndScreenActivity"

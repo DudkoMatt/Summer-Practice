@@ -12,8 +12,6 @@ class Help : AppCompatActivity() {
         setContentView(R.layout.activity_help)
         button2.setOnClickListener {
             finish()
-
-
         }
     }
 }
