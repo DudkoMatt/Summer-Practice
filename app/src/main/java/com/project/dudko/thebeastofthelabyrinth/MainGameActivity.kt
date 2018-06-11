@@ -8,6 +8,7 @@ import android.graphics.Point
 import android.media.Image
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.Log
@@ -15,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.project.dudko.thebeastofthelabyrinth.R.array.map_1
 import kotlinx.android.synthetic.main.activity_main_game.*
+import org.w3c.dom.Text
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
@@ -302,6 +304,7 @@ class MainGameActivity : AppCompatActivity() {
             if(check_in_coins_position() && !check_in_collected_coins()){
                 CollectedCoins.add(PlayerPosition.toList())
                 NumberOfCollectedCoins++
+                context.findViewById<TextView>(R.id.number_of_collected_coins).text = "#collected / #whole_number".replace("#collected", NumberOfCollectedCoins.toString()).replace("#whole_number", CoinNumber.toString())
                 return true
             }
             return false
@@ -345,6 +348,8 @@ class MainGameActivity : AppCompatActivity() {
             if(id != null) {
                 //Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
 
+                context.findViewById<TextView>(R.id.level_text).text = "Level: ${id}"
+
                 val num_x = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[0].split(" ")[0].toInt()
                 val num_y =context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[0].split(" ")[1].toInt()
                 ExitPosition[0] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[1].split(" ")[0].toInt()
@@ -378,6 +383,7 @@ class MainGameActivity : AppCompatActivity() {
                     }
                     map.add(tmp)
                 }
+                context.findViewById<TextView>(R.id.number_of_collected_coins).text = "#collected / #whole_number".replace("#collected", NumberOfCollectedCoins.toString()).replace("#whole_number", CoinNumber.toString())
 
 
             } else {
@@ -393,6 +399,8 @@ class MainGameActivity : AppCompatActivity() {
             }
         }
     }
+
+    var elapsedTime = 0L
 
     val REQUEST_EXIT = 1
     //0 - продолжить
@@ -412,7 +420,8 @@ class MainGameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_game)
 
-        Log.d("Debug", resources.getIdentifier("img_000.jpg", "type/image", packageName).toString())
+        chronometr.base = SystemClock.elapsedRealtime()
+        chronometr.start()
 
         Log.d("Tag", "Create")
 
@@ -521,6 +530,23 @@ class MainGameActivity : AppCompatActivity() {
                 }
 
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        chronometr.stop()
+        elapsedTime = SystemClock.elapsedRealtime() - chronometr.base
+    }
+
+    override fun onResume() {
+        super.onResume()
+        chronometr.base = SystemClock.elapsedRealtime() - elapsedTime
+        chronometr.start()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, PauseActivity::class.java)
+        startActivityForResult(intent, REQUEST_EXIT)
     }
 
 }

@@ -2,5 +2,17 @@
     <string name="app_name">The Beast Of The Labyrinth</string>
     <string name="pause">Pause</string>
     <string name="game_settings">Game Settings</string>
-    <string name="dark_mode">Dark Mode</string>
+    <string name="dark_mode">DarkMode</string>
+    <string name="coin_number">#collected / #whole_number</string>
+    <string name="timer">Time:</string>
+    <string name="back">Back</string>
+    <string name="how_to_move">How to move:</string>
+    <string name="how_to_move_explanation">Just tap on the cell next to you.</string>
+    <string name="how_to_win">What you need to win:</string>
+    <string name="how_to_win_explanation">You can escape any time you want. But for gaining coins you get more score! Check it out in the scoreboard.</string>
+    <string name="version">Version: 1.0</string>
+    <string name="continue_text">Continue</string>
+    <string name="exit">Exit</string>
+    <string name="win">You Won!</string>
+    <string name="fail">You Failed</string>
 </resources>
