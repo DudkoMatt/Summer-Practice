@@ -3,4 +3,5 @@
     <string name="pause">Pause</string>
     <string name="game_settings">Game Settings</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="coin_number">#collected / #whole_number</string>
 </resources>
