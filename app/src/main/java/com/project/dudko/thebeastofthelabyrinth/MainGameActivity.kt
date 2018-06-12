@@ -14,7 +14,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.*
-import com.project.dudko.thebeastofthelabyrinth.R.array.map_1
 import kotlinx.android.synthetic.main.activity_main_game.*
 import org.w3c.dom.Text
 import java.util.*

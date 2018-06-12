@@ -52,6 +52,7 @@
 
 
                 <Button
+                    android:id="@+id/button_levels"
                     android:layout_centerHorizontal="true"
                     android:layout_width="220dp"
                     android:layout_height="80dp"

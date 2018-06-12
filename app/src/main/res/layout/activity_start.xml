@@ -58,6 +58,7 @@
             android:textSize="28sp" />
 
         <Button
+            android:id="@+id/about"
             android:layout_width="150dp"
             android:layout_height="70dp"
             android:layout_below="@id/start"
@@ -68,6 +69,7 @@
             android:textSize="28sp" />
 
         <Button
+            android:id="@+id/help"
             android:layout_width="150dp"
             android:layout_height="70dp"
             android:layout_alignStart="@id/options"
