@@ -76,17 +76,14 @@ class MainGameActivity : AppCompatActivity() {
                 for(j in 0..7){
                     s += "${i};${j}: ${map[i][j]}   "
                 }
-                Log.d("Map", s+"\n")
+                //Log.d("Map", s+"\n")
             }
 
         }
 
-        fun beast_goes(x: Int, y: Int){
-            map[x][y]  -= 200
-        }
 
         fun update(x: Int = 0, y: Int = 0, first: Boolean = false, darkMode: Boolean = false){
-            Log.d("Msg", "In update")
+            //Log.d("Msg", "In update")
 
             if(first) {
                 if (!darkMode){
@@ -100,17 +97,15 @@ class MainGameActivity : AppCompatActivity() {
                 }
             }
 
-            Log.d("Msg", "Before if: x=$x; y=$y")
+            //Log.d("Msg", "Before if: x=$x; y=$y")
 
-
-            //ToDO: redraw для монстра
 
             if (((PlayerPosition[0] == x-1 && PlayerPosition[1] == y) ||
                     (PlayerPosition[0] == x && PlayerPosition[1] == y-1) ||
                     (PlayerPosition[0] == x && PlayerPosition[1] == y+1) ||
                     (PlayerPosition[0] == x+1 && PlayerPosition[1] == y)) &&
-                    isTrunAvaliable(x, y)) { //ToDo: Стены
-                Log.d("Msg", "In if")
+                    isTrunAvaliable(x, y)) {
+                //Log.d("Msg", "In if")
                 map[PlayerPosition[0]][PlayerPosition[1]] -= 400
                 // обновил, откуда ушел
                 fast_redraw(PlayerPosition[0], PlayerPosition[1])
@@ -134,21 +129,25 @@ class MainGameActivity : AppCompatActivity() {
                 //redraw()
             }
 
-            beast_goes( EnemyPosition[0], EnemyPosition[1])
-            fast_redraw( EnemyPosition[0], EnemyPosition[1])
-            EnemyPosition[0] = WayToPlayer[0][Amounth_monster_turns + 1]
-            EnemyPosition[1] = WayToPlayer[1][Amounth_monster_turns + 1]
-            map[WayToPlayer[0][Amounth_monster_turns + 1]][WayToPlayer[1][Amounth_monster_turns + 1]] += 200
-            fast_redraw( WayToPlayer[0][Amounth_monster_turns + 1], WayToPlayer[1][Amounth_monster_turns + 1])
-            Amounth_monster_turns++
 
-            Log.d("Msg", "After if")
+            if(!first) {
+                WayToPlayer = findPathToPlayer()
+                map[EnemyPosition[0]][EnemyPosition[1]] -= 200
+                fast_redraw(EnemyPosition[0], EnemyPosition[1])
+                EnemyPosition = WayToPlayer.removeAt(0)
+                map[EnemyPosition[0]][EnemyPosition[1]] += 200
+                fast_redraw(EnemyPosition[0], EnemyPosition[1])
+            }
+            //Log.d("Msg", "After if")
 
-            //ToDO: переходить на заключительный экран, в случае true. Или добавлять кнопку exit?
+            if(EnemyPosition[0] == PlayerPosition[0] && EnemyPosition[1] == PlayerPosition[1] && !first){
+                var intent = Intent(context, FailEndScreenActivity::class.java)
+                context.startActivityForResult(intent, 1)
+            }
 
             if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1] && NumberOfCollectedCoins == CoinNumber){
-                context.findViewById<Button>(R.id.exit).setEnabled(true)
-        }
+                context.findViewById<Button>(R.id.exit).isEnabled = true
+            }
         }
 
         /*fun redraw(){  //Для демонстрации работы "lock"
@@ -164,7 +163,7 @@ class MainGameActivity : AppCompatActivity() {
             noChange[3] = arrayOf(min(max(PlayerPosition[0]-1, 0), 7), PlayerPosition[1])
             noChange[4] = arrayOf(PlayerPosition[0], min(max(PlayerPosition[1]-1, 0), 7))
 
-            Log.d("Msg", "\n\n\n\n\n\n  noChange:\n0x=:${noChange[0][0]}; y=:${noChange[0][1]}\n  " +
+            //Log.d("Msg", "\n\n\n\n\n\n  noChange:\n0x=:${noChange[0][0]}; y=:${noChange[0][1]}\n  " +
                     "noChange:\n" +
                     "1:x=${noChange[1][0]}; y=${noChange[1][1]}\nnoChange:\n" +
                     "2:x=${noChange[2][0]}; y=${noChange[2][1]}\nnoChange:\n" +
@@ -181,7 +180,7 @@ class MainGameActivity : AppCompatActivity() {
 
 
         fun checkXinY(x:Array<Int>, y:Array<Array<Int>>) : Boolean{
-            Log.d("Msg", "x:(${x[0]};${x[1]})\ny:(${y[0][0]};${y[0][1]})    (${y[1][0]};${y[1][1]})    (${y[2][0]};${y[2][1]})    (${y[3][0]};${y[3][1]})    (${y[4][0]};${y[4][1]})")
+            //Log.d("Msg", "x:(${x[0]};${x[1]})\ny:(${y[0][0]};${y[0][1]})    (${y[1][0]};${y[1][1]})    (${y[2][0]};${y[2][1]})    (${y[3][0]};${y[3][1]})    (${y[4][0]};${y[4][1]})")
             for(i in 0 until y.size){
                 if(x[0] == y[i][0] && x[1] == y[i][1])
                     return true
@@ -310,9 +309,7 @@ class MainGameActivity : AppCompatActivity() {
             }
         }
 
-
-
-        fun isCoinCollected(): Boolean{  //ToDO: вставить в update
+        fun isCoinCollected(): Boolean{
             if(check_in_coins_position() && !check_in_collected_coins()){
                 CollectedCoins.add(PlayerPosition.toList())
                 NumberOfCollectedCoins++
@@ -364,7 +361,8 @@ class MainGameActivity : AppCompatActivity() {
             }
 
             var v = PlayerPosition
-            while(a[v[0]][v[1]] != 0){
+            to_return.add(PlayerPosition)
+            while(a[v[0]][v[1]] != 1){
                 var min = 10000000
                 lateinit var min_v: Array<Int>
                 for(i in adj(v)){
@@ -403,9 +401,7 @@ class MainGameActivity : AppCompatActivity() {
         var EnemyPosition = Array(2){i -> 0}
         var PlayerPosition = Array(2){i -> 0}
 
-        //ToDo: подправить
-        var WayToPlayer = Array(2, { Array(64, {0})})
-        var Amounth_monster_turns = 1 //Монстр ходит на поле amounth_monster_turns+1 по счету, сначала он на первой клетке
+        var WayToPlayer = MutableList(0, { Array(2, {0})})
 
 
         var CoinNumber = 0
@@ -416,15 +412,11 @@ class MainGameActivity : AppCompatActivity() {
 
         var ExitPosition = Array(2){i -> 0} //Учитывать, что выход не сдвинут вне карты на одну клетку
 
-        //ToDo: создать ID выхода -> 900
-
         var map = MutableList(0){i -> MutableList(2){0} }
 
         init{
-
-
             if(id != null) {
-                //Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
+                ////Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
 
                 context.findViewById<TextView>(R.id.level_text).text = "Level: ${id}"
 
@@ -432,7 +424,6 @@ class MainGameActivity : AppCompatActivity() {
                 val num_y =context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[0].split(" ")[1].toInt()
                 ExitPosition[0] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[1].split(" ")[0].toInt()
                 ExitPosition[1] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[1].split(" ")[1].toInt()
-
 
 
                 CoinNumber = 0
@@ -476,8 +467,7 @@ class MainGameActivity : AppCompatActivity() {
                 for(i in 1..6) map[i][7] = 2
             }
 
-            WayToPlayer[0] = arrayOf(7, 7, 7, 7, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0, 1, 1, 2, 3, 4, 5, 6, 7, 7, 7)
-            WayToPlayer[1] = arrayOf(3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7, 6, 5, 5, 6, 6, 6, 6, 6, 6, 6, 5, 4)
+            WayToPlayer = findPathToPlayer()
         }
     }
 
@@ -491,7 +481,6 @@ class MainGameActivity : AppCompatActivity() {
     val Buttons = Array(8){i -> Array(8){i -> -1}}
 
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == 1) finish()
@@ -502,18 +491,17 @@ class MainGameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_game)
 
 
-        exit.setEnabled(false);
-
+        exit.isEnabled = false
 
         exit.setOnClickListener{
-            val intent = Intent(this, SuccessEndScreenActivity::class.java)
-            startActivity(intent)
+            val intent = Intent(this, EndOfTheLevelActivity::class.java)
+            startActivityForResult(intent, 1)
         }
 
         chronometr.base = SystemClock.elapsedRealtime()
         chronometr.start()
 
-        Log.d("Tag", "Create")
+        //Log.d("Tag", "Create")
 
 
         /*val tr = TableRow(this)
@@ -535,7 +523,7 @@ class MainGameActivity : AppCompatActivity() {
         for (i in 0..7) {
             for (j in 0..7)
             {
-                //Log.d("Cre", "base_width: ${baselayout.width}\nbase_heigth: ${baselayout.height}")
+                ////Log.d("Cre", "base_width: ${baselayout.width}\nbase_heigth: ${baselayout.height}")
                 val button = ImageButton(this)
                 button.layoutParams = TableRow.LayoutParams(size.y / num_y, (size.x / num_x).toInt(), 1f)//baselayout.width/8, (baselayout.height*0.7/8).toInt(), 1f)
                 button.setBackgroundResource(R.drawable.img_000)
@@ -572,7 +560,7 @@ class MainGameActivity : AppCompatActivity() {
 
         /*for(i in 0 until n) {
             val button = findViewById<ImageButton>(Buttons[i / 8][i % 8])
-            Log.d("Err", "\nid: ${Buttons[i / 8][i % 8]}\nbutton: $button")
+            //Log.d("Err", "\nid: ${Buttons[i / 8][i % 8]}\nbutton: $button")
             when (i / 8) {
                 0 -> tablerow1.addView(button)
                 1 -> tablerow2.addView(button)
@@ -597,7 +585,7 @@ class MainGameActivity : AppCompatActivity() {
 
 
         val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
-            Log.d("Map", "It has extra")
+            //Log.d("Map", "It has extra")
             MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this, ButtonsView)
         }
         else {
@@ -615,12 +603,9 @@ class MainGameActivity : AppCompatActivity() {
             for(j in 0..7)
                 findViewById<ImageButton>(Buttons[i][j]).setOnClickListener {
                     map.debug()
-                    var path_debug = map.findPathToPlayer()
                     map.update(i, j, darkMode = darkMode)
-                    //Log.d("Msg", "Clicked on a button: i=$i; j=$j;                        Player's Position: x=${map.PlayerPosition[0]}; y=${map.PlayerPosition[1]}")
+                    ////Log.d("Msg", "Clicked on a button: i=$i; j=$j;                        Player's Position: x=${map.PlayerPosition[0]}; y=${map.PlayerPosition[1]}")
                 }
-
-
     }
 
     override fun onPause() {

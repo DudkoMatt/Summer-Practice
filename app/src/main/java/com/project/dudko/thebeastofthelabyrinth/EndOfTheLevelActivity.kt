@@ -11,16 +11,13 @@ class EndOfTheLevelActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_end_of_the_level)
 
-
-
-        button_start.setOnClickListener{
-            val intent = Intent(this, StartActivity::class.java)
-            startActivity(intent)
-        }
-
+        /*button_start.setOnClickListener{
+            setResult(1)
+            finish()
+        }*/
+        setResult(1)
         button_levels.setOnClickListener{
-            val intent = Intent(this, LevelSelector::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 }

@@ -42,7 +42,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".FailEndScreenActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".SuccessEndScreenActivity"
+        <activity android:name=".EndOfTheLevelActivity"
             android:screenOrientation="portrait"/>
     </application>
 

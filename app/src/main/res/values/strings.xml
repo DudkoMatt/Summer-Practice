@@ -13,6 +13,7 @@
     <string name="version">Version: 1.0</string>
     <string name="continue_text">Continue</string>
     <string name="exit">Exit</string>
-    <string name="win">You Won!</string>
+    <string name="win">Congratulations! You`ve completed the level!</string>
     <string name="fail">You Failed</string>
+    <string name="levels">Levels</string>
 </resources>
