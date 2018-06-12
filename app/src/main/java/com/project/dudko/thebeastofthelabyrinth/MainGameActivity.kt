@@ -328,6 +328,53 @@ class MainGameActivity : AppCompatActivity() {
             return false
         }
 
+        fun findPathToPlayer(): MutableList<Array<Int>> {
+            var to_return = MutableList(0){i -> Array(2){0}}
+            var a = Array(map.size){i -> Array(map[0].size){i -> -1}}
+            var a_bool = Array(map.size){i -> Array(map[0].size){i -> false}}
+            var stack = MutableList(0){Array(2){0}}
+
+            a[EnemyPosition[0]][EnemyPosition[1]]= 0
+            a_bool[EnemyPosition[0]][EnemyPosition[1]]= true
+            stack.add(EnemyPosition)
+
+            //В ширину
+            while (stack.size > 0){
+                var v = stack.removeAt(0)
+                var iterable_array = adj(v)
+                for(i in iterable_array){
+                    if(!a_bool[i[0]][i[1]]){
+                        stack.add(i)
+                        a_bool[i[0]][i[1]] = true
+                        a[i[0]][i[1]] = a[v[0]][v[1]] + 1
+                    }
+                }
+            }
+
+            return to_return
+        }
+
+        fun adj(v: Array<Int>): MutableList<Array<Int>>{
+            var to_return = MutableList(0){Array(2){0}}
+            if("L" in avaliable_turns[map[v[0]][v[1]] % 100]!!){
+                if(v[1]-1 >= 0)
+                    to_return.add(arrayOf(v[0], v[1]-1))
+            }
+            if("U" in avaliable_turns[map[v[0]][v[1]] % 100]!!){
+                if(v[0]-1 >= 0)
+                    to_return.add(arrayOf(v[0]-1, v[1]))
+            }
+            if("R" in avaliable_turns[map[v[0]][v[1]] % 100]!!){
+                if(v[1]+1 <= 7)
+                    to_return.add(arrayOf(v[0], v[1]+1))
+            }
+            if("D" in avaliable_turns[map[v[0]][v[1]] % 100]!!){
+                if(v[0]+1 <= 7)
+                    to_return.add(arrayOf(v[0]+1, v[1]))
+            }
+            return to_return
+        }
+
         var EnemyPosition = Array(2){i -> 0}
         var PlayerPosition = Array(2){i -> 0}
         var CoinNumber = 0
@@ -525,6 +572,7 @@ class MainGameActivity : AppCompatActivity() {
             for(j in 0..7)
                 findViewById<ImageButton>(Buttons[i][j]).setOnClickListener {
                     map.debug()
+                    map.findPathToPlayer()
                     map.update(i, j, darkMode = darkMode)
                     //Log.d("Msg", "Clicked on a button: i=$i; j=$j;                        Player's Position: x=${map.PlayerPosition[0]}; y=${map.PlayerPosition[1]}")
                 }
