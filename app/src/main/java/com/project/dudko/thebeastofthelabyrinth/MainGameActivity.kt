@@ -23,6 +23,8 @@ import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
 
+    var ID = 0
+
     class MapOfLabyrinth(var id: Int? = null, var context: Activity, var buttons: Array<Array<ImageButton>>){
 
 
@@ -74,7 +76,7 @@ class MainGameActivity : AppCompatActivity() {
             for(i in 0..7){
                 var s = ""
                 for(j in 0..7){
-                    s += "${i};${j}: ${map[i][j]}   "
+                    s += "$i;$j: ${map[i][j]}   "
                 }
                 //Log.d("Map", s+"\n")
             }
@@ -125,26 +127,30 @@ class MainGameActivity : AppCompatActivity() {
                 if(darkMode){
                     redrawWithBlack(oldX, oldY, PlayerPosition[0], PlayerPosition[1])
                 }
-
+                Turns++
+                context.findViewById<TextView>(R.id.turns).text = "Turns: #".replace("#", Turns.toString())
                 //redraw()
+
+                if(!first) {
+                    WayToPlayer = findPathToPlayer()
+                    map[EnemyPosition[0]][EnemyPosition[1]] -= 200
+                    fast_redraw(EnemyPosition[0], EnemyPosition[1])
+                    EnemyPosition = WayToPlayer.removeAt(0)
+                    map[EnemyPosition[0]][EnemyPosition[1]] += 200
+                    fast_redraw(EnemyPosition[0], EnemyPosition[1])
+                }
+
+
+                if(EnemyPosition[0] == PlayerPosition[0] && EnemyPosition[1] == PlayerPosition[1] && !first){
+                    var intent = Intent(context, FailEndScreenActivity::class.java)
+                    context.startActivityForResult(intent, 1)
+                }
             }
 
 
-            if(!first) {
-                WayToPlayer = findPathToPlayer()
-                map[EnemyPosition[0]][EnemyPosition[1]] -= 200
-                fast_redraw(EnemyPosition[0], EnemyPosition[1])
-                EnemyPosition = WayToPlayer.removeAt(0)
-                map[EnemyPosition[0]][EnemyPosition[1]] += 200
-                fast_redraw(EnemyPosition[0], EnemyPosition[1])
-            }
+
+
             //Log.d("Msg", "After if")
-
-            if(EnemyPosition[0] == PlayerPosition[0] && EnemyPosition[1] == PlayerPosition[1] && !first){
-                var intent = Intent(context, FailEndScreenActivity::class.java)
-                context.startActivityForResult(intent, 1)
-            }
-
             context.findViewById<Button>(R.id.exit).isEnabled = PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1]
         }
 
@@ -412,6 +418,8 @@ class MainGameActivity : AppCompatActivity() {
 
         var map = MutableList(0){i -> MutableList(2){0} }
 
+        var Turns = 0
+
         init{
             if(id != null) {
                 ////Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
@@ -488,13 +496,6 @@ class MainGameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_game)
 
-
-        exit.isEnabled = false
-
-        exit.setOnClickListener{
-            val intent = Intent(this, EndOfTheLevelActivity::class.java)
-            startActivityForResult(intent, 1)
-        }
 
         chronometr.base = SystemClock.elapsedRealtime()
         chronometr.start()
@@ -584,6 +585,7 @@ class MainGameActivity : AppCompatActivity() {
 
         val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
             //Log.d("Map", "It has extra")
+            ID = intent.getStringExtra("Id_Of_Level").toInt()
             MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this, ButtonsView)
         }
         else {
@@ -594,7 +596,6 @@ class MainGameActivity : AppCompatActivity() {
         val darkMode = sPref.getBoolean("darkMode", false)
 
         map.update(map.PlayerPosition[0], map.PlayerPosition[1], first = true, darkMode = darkMode)
-
         map.debug()
 
         for(i in 0..7)
@@ -604,7 +605,24 @@ class MainGameActivity : AppCompatActivity() {
                     map.update(i, j, darkMode = darkMode)
                     ////Log.d("Msg", "Clicked on a button: i=$i; j=$j;                        Player's Position: x=${map.PlayerPosition[0]}; y=${map.PlayerPosition[1]}")
                 }
+
+        exit.isEnabled = false
+
+        exit.setOnClickListener{
+            val intent = Intent(this, EndOfTheLevelActivity::class.java)
+            intent.putExtra("Level", ID.toString())
+            intent.putExtra("Coins", map.NumberOfCollectedCoins.toString())
+            intent.putExtra("Time", "${(SystemClock.elapsedRealtime() - chronometr.base)  / 60000}:${wrap((SystemClock.elapsedRealtime() - chronometr.base) /1000 % 60)}")
+            intent.putExtra("Turns", map.Turns.toString())
+            startActivityForResult(intent, 1)
+        }
+
     }
+
+    fun wrap(x: Long): String = when(x){
+            in 0..9 -> "0$x"
+            else -> "$x"
+        }
 
     override fun onPause() {
         super.onPause()

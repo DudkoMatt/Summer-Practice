@@ -16,4 +16,9 @@
     <string name="win">Congratulations! You`ve completed the level!</string>
     <string name="fail">You Failed</string>
     <string name="levels">Levels</string>
+    <string name="start">Start</string>
+    <string name="options">Options</string>
+    <string name="about">About</string>
+    <string name="help">Help</string>
+    <string name="save_results">Take a screenshot to save your results!</string>
 </resources>

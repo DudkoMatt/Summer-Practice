@@ -7,7 +7,6 @@
     tools:context="com.project.dudko.thebeastofthelabyrinth.Help">
 
     <Button
-        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -42,7 +41,6 @@
 
     <TextView
         android:textSize="30sp"
-        android:id="@+id/text4"
         android:layout_below="@id/text3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
