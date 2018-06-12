@@ -145,9 +145,7 @@ class MainGameActivity : AppCompatActivity() {
                 context.startActivityForResult(intent, 1)
             }
 
-            if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1] && NumberOfCollectedCoins == CoinNumber){
-                context.findViewById<Button>(R.id.exit).isEnabled = true
-            }
+            context.findViewById<Button>(R.id.exit).isEnabled = PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1]
         }
 
         /*fun redraw(){  //Для демонстрации работы "lock"
