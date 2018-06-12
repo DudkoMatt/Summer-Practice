@@ -81,6 +81,10 @@ class MainGameActivity : AppCompatActivity() {
 
         }
 
+        fun beast_goes(x: Int, y: Int){
+            map[x][y]  -= 200
+        }
+
         fun update(x: Int = 0, y: Int = 0, first: Boolean = false, darkMode: Boolean = false){
             Log.d("Msg", "In update")
 
@@ -129,14 +133,22 @@ class MainGameActivity : AppCompatActivity() {
 
                 //redraw()
             }
+
+            beast_goes( EnemyPosition[0], EnemyPosition[1])
+            fast_redraw( EnemyPosition[0], EnemyPosition[1])
+            EnemyPosition[0] = WayToPlayer[0][Amounth_monster_turns + 1]
+            EnemyPosition[1] = WayToPlayer[1][Amounth_monster_turns + 1]
+            map[WayToPlayer[0][Amounth_monster_turns + 1]][WayToPlayer[1][Amounth_monster_turns + 1]] += 200
+            fast_redraw( WayToPlayer[0][Amounth_monster_turns + 1], WayToPlayer[1][Amounth_monster_turns + 1])
+            Amounth_monster_turns++
+
             Log.d("Msg", "After if")
 
             //ToDO: переходить на заключительный экран, в случае true. Или добавлять кнопку exit?
 
             if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1] && NumberOfCollectedCoins == CoinNumber){
-                val intent = Intent(context, SuccessEndScreenActivity::class.java)
-                context.startActivityForResult(intent, 1)
-            }
+                context.findViewById<Button>(R.id.exit).setEnabled(true)
+        }
         }
 
         /*fun redraw(){  //Для демонстрации работы "lock"
@@ -390,6 +402,12 @@ class MainGameActivity : AppCompatActivity() {
 
         var EnemyPosition = Array(2){i -> 0}
         var PlayerPosition = Array(2){i -> 0}
+
+        //ToDo: подправить
+        var WayToPlayer = Array(2, { Array(64, {0})})
+        var Amounth_monster_turns = 1 //Монстр ходит на поле amounth_monster_turns+1 по счету, сначала он на первой клетке
+
+
         var CoinNumber = 0
         var CoinsPosition = MutableList(CoinNumber){i -> List(2){i -> 0}}
 
@@ -457,6 +475,9 @@ class MainGameActivity : AppCompatActivity() {
                 for(i in 1..6) map[i][0] = 4
                 for(i in 1..6) map[i][7] = 2
             }
+
+            WayToPlayer[0] = arrayOf(7, 7, 7, 7, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0, 1, 1, 2, 3, 4, 5, 6, 7, 7, 7)
+            WayToPlayer[1] = arrayOf(3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7, 6, 5, 5, 6, 6, 6, 6, 6, 6, 6, 5, 4)
         }
     }
 
@@ -479,6 +500,15 @@ class MainGameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_game)
+
+
+        exit.setEnabled(false);
+
+
+        exit.setOnClickListener{
+            val intent = Intent(this, SuccessEndScreenActivity::class.java)
+            startActivity(intent)
+        }
 
         chronometr.base = SystemClock.elapsedRealtime()
         chronometr.start()
