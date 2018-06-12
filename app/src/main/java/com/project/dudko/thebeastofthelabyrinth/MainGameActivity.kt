@@ -144,6 +144,13 @@ class MainGameActivity : AppCompatActivity() {
                     var intent = Intent(context, FailEndScreenActivity::class.java)
                     context.startActivityForResult(intent, 1)
                 }
+
+                if (darkMode){
+                    // Отрисовали все поле черным
+                    redrawWithBlack()
+                    // Отрисовали игрока
+                    drawPers(PlayerPosition[0], PlayerPosition[1])
+                }
             }
 
 
