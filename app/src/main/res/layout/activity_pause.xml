@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".PauseActivity">
     <TextView
+        android:id="@+id/pause"
         android:layout_centerHorizontal="true"
         android:text="@string/pause"
         android:textSize="50sp"
