@@ -351,7 +351,20 @@ class MainGameActivity : AppCompatActivity() {
                 }
             }
 
-            return to_return
+            var v = PlayerPosition
+            while(a[v[0]][v[1]] != 0){
+                var min = 10000000
+                lateinit var min_v: Array<Int>
+                for(i in adj(v)){
+                    if(min > a[i[0]][i[1]]){
+                        min = a[i[0]][i[1]]
+                        min_v = i
+                    }
+                }
+                v = min_v
+                to_return.add(v)
+            }
+            return to_return.reversed().toMutableList()
         }
 
         fun adj(v: Array<Int>): MutableList<Array<Int>>{
@@ -572,7 +585,7 @@ class MainGameActivity : AppCompatActivity() {
             for(j in 0..7)
                 findViewById<ImageButton>(Buttons[i][j]).setOnClickListener {
                     map.debug()
-                    map.findPathToPlayer()
+                    var path_debug = map.findPathToPlayer()
                     map.update(i, j, darkMode = darkMode)
                     //Log.d("Msg", "Clicked on a button: i=$i; j=$j;                        Player's Position: x=${map.PlayerPosition[0]}; y=${map.PlayerPosition[1]}")
                 }
