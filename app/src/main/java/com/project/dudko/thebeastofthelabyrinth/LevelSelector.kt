@@ -13,19 +13,49 @@ class LevelSelector : AppCompatActivity() {
         button_back.setOnClickListener {
             finish()
         }
-        button_1.setOnClickListener {
+        lvl1.setOnClickListener {
             val intent = Intent(this, MainGameActivity::class.java)
             intent.putExtra("Id_Of_Level", "1")
             startActivity(intent)
         }
-        button_2.setOnClickListener {
+        lvl2.setOnClickListener {
             val intent = Intent(this, MainGameActivity::class.java)
             intent.putExtra("Id_Of_Level", "2")
             startActivity(intent)
         }
-        button_3.setOnClickListener {
+        lvl3.setOnClickListener {
             val intent = Intent(this, MainGameActivity::class.java)
             intent.putExtra("Id_Of_Level", "3")
+            startActivity(intent)
+        }
+        lvl4.setOnClickListener {
+            val intent = Intent(this, MainGameActivity::class.java)
+            intent.putExtra("Id_Of_Level", "4")
+            startActivity(intent)
+        }
+        lvl5.setOnClickListener {
+            val intent = Intent(this, MainGameActivity::class.java)
+            intent.putExtra("Id_Of_Level", "5")
+            startActivity(intent)
+        }
+        lvl6.setOnClickListener {
+            val intent = Intent(this, MainGameActivity::class.java)
+            intent.putExtra("Id_Of_Level", "6")
+            startActivity(intent)
+        }
+        lvl7.setOnClickListener {
+            val intent = Intent(this, MainGameActivity::class.java)
+            intent.putExtra("Id_Of_Level", "7")
+            startActivity(intent)
+        }
+        lvl8.setOnClickListener {
+            val intent = Intent(this, MainGameActivity::class.java)
+            intent.putExtra("Id_Of_Level", "8")
+            startActivity(intent)
+        }
+        lvl9.setOnClickListener {
+            val intent = Intent(this, MainGameActivity::class.java)
+            intent.putExtra("Id_Of_Level", "9")
             startActivity(intent)
         }
     }
