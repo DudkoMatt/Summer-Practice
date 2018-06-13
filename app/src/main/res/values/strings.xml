@@ -23,4 +23,5 @@
     <string name="save_results">Take a screenshot to save your results!</string>
     <string name="select_level">Select level:</string>
     <string name="warning">Tap twice on exit to flee!</string>
+    <string name="settings_warning">This dangerous option was disabled due to unstable behavior when it\'s unchecked</string>
 </resources>

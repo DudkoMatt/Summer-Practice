@@ -95,6 +95,7 @@ class MainGameActivity : AppCompatActivity() {
                     redrawWithBlack()
                     // Отрисовали игрока
                     drawPers(PlayerPosition[0], PlayerPosition[1])
+                    fast_redraw(EnemyPosition[0], EnemyPosition[1])
                 }
             }
 
@@ -156,6 +157,8 @@ class MainGameActivity : AppCompatActivity() {
                     redrawWithBlack()
                     // Отрисовали игрока
                     drawPers(PlayerPosition[0], PlayerPosition[1])
+                    //рисуем монстра
+                    fast_redraw(EnemyPosition[0], EnemyPosition[1])
                 }
             }
 
@@ -163,7 +166,7 @@ class MainGameActivity : AppCompatActivity() {
                 val intent = Intent(context, EndOfTheLevelActivity::class.java)
                 intent.putExtra("Level", id.toString())
                 intent.putExtra("Coins", NumberOfCollectedCoins.toString())
-                intent.putExtra("Time", "${(SystemClock.elapsedRealtime() - context.chronometr.base)  / 60000}:${wrap((SystemClock.elapsedRealtime() - context.chronometr.base) /1000 % 60)}")
+                //intent.putExtra("Time", "${(SystemClock.elapsedRealtime() - context.chronometr.base)  / 60000}:${wrap((SystemClock.elapsedRealtime() - context.chronometr.base) /1000 % 60)}")
                 intent.putExtra("Turns", this.Turns.toString())
                 context.startActivityForResult(intent, 1)
             }
@@ -474,7 +477,7 @@ class MainGameActivity : AppCompatActivity() {
         }
     }
 
-    var elapsedTime = 0L
+    //var elapsedTime = 0L
 
     val REQUEST_EXIT = 1
     //0 - продолжить
@@ -494,8 +497,8 @@ class MainGameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_game)
 
 
-        chronometr.base = SystemClock.elapsedRealtime()
-        chronometr.start()
+        //chronometr.base = SystemClock.elapsedRealtime()
+        //chronometr.start()
 
         //Log.d("Tag", "Create")
 
@@ -618,14 +621,14 @@ class MainGameActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        chronometr.stop()
-        elapsedTime = SystemClock.elapsedRealtime() - chronometr.base
+        //chronometr.stop()
+        //elapsedTime = SystemClock.elapsedRealtime() - chronometr.base
     }
 
     override fun onResume() {
         super.onResume()
-        chronometr.base = SystemClock.elapsedRealtime() - elapsedTime
-        chronometr.start()
+        //chronometr.base = SystemClock.elapsedRealtime() - elapsedTime
+        //chronometr.start()
     }
 
     override fun onBackPressed() {

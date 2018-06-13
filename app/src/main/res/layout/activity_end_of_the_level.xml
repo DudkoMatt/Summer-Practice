@@ -4,7 +4,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".EndOfTheLevelActivity"
-android:background="#cbc50bf9"
+android:background="@color/gray"
 android:orientation="vertical">
 
 <!--<RelativeLayout
