@@ -159,11 +159,19 @@ class MainGameActivity : AppCompatActivity() {
                 }
             }
 
+            else if (PlayerPosition[0] == x && PlayerPosition[1] == y && ExitPosition[0] == x && ExitPosition[1] == y){
+                val intent = Intent(context, EndOfTheLevelActivity::class.java)
+                intent.putExtra("Level", id.toString())
+                intent.putExtra("Coins", NumberOfCollectedCoins.toString())
+                intent.putExtra("Time", "${(SystemClock.elapsedRealtime() - context.chronometr.base)  / 60000}:${wrap((SystemClock.elapsedRealtime() - context.chronometr.base) /1000 % 60)}")
+                intent.putExtra("Turns", this.Turns.toString())
+                context.startActivityForResult(intent, 1)
+            }
 
 
 
             //Log.d("Msg", "After if")
-            context.findViewById<Button>(R.id.exit).isEnabled = PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1]
+            //context.findViewById<Button>(R.id.exit).isEnabled = PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1]
         }
 
         /*fun redraw(){  //Для демонстрации работы "lock"
@@ -386,6 +394,11 @@ class MainGameActivity : AppCompatActivity() {
             return to_return
         }
 
+        fun wrap(x: Long): String = when(x){
+            in 0..9 -> "0$x"
+            else -> "$x"
+        }
+
         var EnemyPosition = Array(2){i -> 0}
         var PlayerPosition = Array(2){i -> 0}
 
@@ -590,7 +603,7 @@ class MainGameActivity : AppCompatActivity() {
                     ////Log.d("Msg", "Clicked on a button: i=$i; j=$j;                        Player's Position: x=${map.PlayerPosition[0]}; y=${map.PlayerPosition[1]}")
                 }
 
-        exit.isEnabled = false
+        /*exit.isEnabled = false
 
         exit.setOnClickListener{
             val intent = Intent(this, EndOfTheLevelActivity::class.java)
@@ -599,14 +612,9 @@ class MainGameActivity : AppCompatActivity() {
             intent.putExtra("Time", "${(SystemClock.elapsedRealtime() - chronometr.base)  / 60000}:${wrap((SystemClock.elapsedRealtime() - chronometr.base) /1000 % 60)}")
             intent.putExtra("Turns", map.Turns.toString())
             startActivityForResult(intent, 1)
-        }
+        }*/
 
     }
-
-    fun wrap(x: Long): String = when(x){
-            in 0..9 -> "0$x"
-            else -> "$x"
-        }
 
     override fun onPause() {
         super.onPause()

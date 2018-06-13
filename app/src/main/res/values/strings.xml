@@ -22,4 +22,5 @@
     <string name="help">Help</string>
     <string name="save_results">Take a screenshot to save your results!</string>
     <string name="select_level">Select level:</string>
+    <string name="warning">Tap twice on exit to flee!</string>
 </resources>
