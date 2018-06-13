@@ -14,7 +14,7 @@
     <string name="continue_text">Continue</string>
     <string name="exit">Exit</string>
     <string name="win">Congratulations! You`ve completed the level!</string>
-    <string name="fail">You Failed</string>
+    <string name="fail">Game Over</string>
     <string name="levels">Levels</string>
     <string name="start">Start</string>
     <string name="options">Options</string>

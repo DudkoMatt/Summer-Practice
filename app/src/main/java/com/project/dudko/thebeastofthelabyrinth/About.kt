@@ -12,8 +12,8 @@ class About : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val dataArray = arrayOf("Creators:", "Dudko Matt", "Zaharcev Dmitriy", "Lvov Aleksander", "Sorokin Dmitriy")
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataArray)
+        val dataArray = arrayOf("Creators:", "Dudko Matvey", "Zaharcev Dmitriy", "Lvov Aleksander", "Sorokin Dmitriy")
+        val adapter = ArrayAdapter<String>(this, R.layout.forlistview, dataArray)
 
         list2.adapter = adapter
 

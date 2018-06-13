@@ -15,6 +15,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/game_settings"
+        android:fontFamily="@font/aclonica"
         android:textSize="40sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +37,7 @@
         android:layout_marginTop="18dp"
         android:textSize="30sp"
         android:textAlignment="center"
-        android:textColor="@color/red"
+        android:textColor="@color/black"
         android:id="@+id/warn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
