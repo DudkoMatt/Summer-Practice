@@ -647,4 +647,6 @@ class MainGameActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_EXIT)
     }
 
+
+
 }
