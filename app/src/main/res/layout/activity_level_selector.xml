@@ -45,4 +45,14 @@
         android:layout_alignStart="@id/button_1"
         android:text="2"
         android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/button_3"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/button_2"
+        android:layout_below="@+id/button_2"
+        android:layout_marginTop="15dp"
+        android:text="3"
+        android:textSize="20sp" />
 </RelativeLayout>

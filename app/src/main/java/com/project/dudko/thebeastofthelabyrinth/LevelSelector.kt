@@ -23,5 +23,10 @@ class LevelSelector : AppCompatActivity() {
             intent.putExtra("Id_Of_Level", "2")
             startActivity(intent)
         }
+        button_3.setOnClickListener {
+            val intent = Intent(this, MainGameActivity::class.java)
+            intent.putExtra("Id_Of_Level", "3")
+            startActivity(intent)
+        }
     }
 }
