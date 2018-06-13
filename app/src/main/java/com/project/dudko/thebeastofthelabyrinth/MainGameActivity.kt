@@ -134,7 +134,7 @@ class MainGameActivity : AppCompatActivity() {
                     WayToPlayer = findPathToPlayer()
                     map[EnemyPosition[0]][EnemyPosition[1]] -= 200
                     fast_redraw(EnemyPosition[0], EnemyPosition[1])
-                    EnemyPosition = WayToPlayer.removeAt(0)
+                    EnemyPosition = WayToPlayer
                     map[EnemyPosition[0]][EnemyPosition[1]] += 200
                     fast_redraw(EnemyPosition[0], EnemyPosition[1])
                 }
@@ -347,44 +347,15 @@ class MainGameActivity : AppCompatActivity() {
             return false
         }
 
-        fun findPathToPlayer(): MutableList<Array<Int>> {
-            var to_return = MutableList(0){i -> Array(2){0}}
-            var a = Array(map.size){i -> Array(map[0].size){i -> -1}}
-            var a_bool = Array(map.size){i -> Array(map[0].size){i -> false}}
-            var stack = MutableList(0){Array(2){0}}
-
-            a[EnemyPosition[0]][EnemyPosition[1]]= 0
-            a_bool[EnemyPosition[0]][EnemyPosition[1]]= true
-            stack.add(EnemyPosition)
-
-            //В ширину
-            while (stack.size > 0){
-                var v = stack.removeAt(0)
-                var iterable_array = adj(v)
-                for(i in iterable_array){
-                    if(!a_bool[i[0]][i[1]]){
-                        stack.add(i)
-                        a_bool[i[0]][i[1]] = true
-                        a[i[0]][i[1]] = a[v[0]][v[1]] + 1
-                    }
+        fun findPathToPlayer(): Array<Int> {
+            var a = adj(EnemyPosition)
+            var b = MutableList(0){Array(2){0}}
+            for(i in a){
+                if(i[0] in 0..7 && i[1] in 0..7){
+                    b.add(i)
                 }
             }
-
-            var v = PlayerPosition
-            to_return.add(PlayerPosition)
-            while(a[v[0]][v[1]] != 1){
-                var min = 10000000
-                lateinit var min_v: Array<Int>
-                for(i in adj(v)){
-                    if(min > a[i[0]][i[1]]){
-                        min = a[i[0]][i[1]]
-                        min_v = i
-                    }
-                }
-                v = min_v
-                to_return.add(v)
-            }
-            return to_return.reversed().toMutableList()
+            return b[Math.abs(Random().nextInt()) % b.size]
         }
 
         fun adj(v: Array<Int>): MutableList<Array<Int>>{
@@ -411,7 +382,7 @@ class MainGameActivity : AppCompatActivity() {
         var EnemyPosition = Array(2){i -> 0}
         var PlayerPosition = Array(2){i -> 0}
 
-        var WayToPlayer = MutableList(0, { Array(2, {0})})
+        var WayToPlayer =  Array(2, {0})
 
 
         var CoinNumber = 0
