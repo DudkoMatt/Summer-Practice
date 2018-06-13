@@ -126,6 +126,12 @@ class MainGameActivity : AppCompatActivity() {
                 if(darkMode){
                     redrawWithBlack(oldX, oldY, PlayerPosition[0], PlayerPosition[1])
                 }
+
+                if(EnemyPosition[0] == PlayerPosition[0] && EnemyPosition[1] == PlayerPosition[1] && !first){
+                    var intent = Intent(context, FailEndScreenActivity::class.java)
+                    context.startActivityForResult(intent, 1)
+                }
+
                 Turns++
                 context.findViewById<TextView>(R.id.turns).text = "Turns: #".replace("#", Turns.toString())
                 //redraw()
@@ -233,8 +239,8 @@ class MainGameActivity : AppCompatActivity() {
 
         // дали позицию, рисуем норм фон в радиусе
         fun drawPers(x:Int, y:Int){
-            for(i in 0..1){
-                for (j in 0..1){
+            for(i in 0..2){
+                for (j in 0..2){
                     // чтобы 4 раза одна клетка не обновлялась
                     if (i == 0 && j == 0){
                         fast_redraw(x, y)
@@ -267,6 +273,7 @@ class MainGameActivity : AppCompatActivity() {
                     fastRedrawWithBlack(oldX+1, newY-1)
                     fastRedrawWithBlack(oldX+1, newY)
                     fastRedrawWithBlack(oldX+1, newY+1)
+
                     // прорисовывем линию на newX - 1
                     fast_redraw(newX-1, newY-1)
                     fast_redraw(newX-1, newY)
