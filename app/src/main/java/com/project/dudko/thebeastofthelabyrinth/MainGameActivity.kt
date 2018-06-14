@@ -250,8 +250,8 @@ class MainGameActivity : AppCompatActivity() {
 
         // дали позицию, рисуем норм фон в радиусе
         fun drawPers(x:Int, y:Int){
-            for(i in 0..2){
-                for (j in 0..2){
+            for(i in 0..1){
+                for (j in 0..1){
                     // чтобы 4 раза одна клетка не обновлялась
                     if (i == 0 && j == 0){
                         fast_redraw(x, y)
@@ -437,7 +437,18 @@ class MainGameActivity : AppCompatActivity() {
                     var tmp = MutableList(num_y){0}
                     for(j in 0 until num_y){
                         tmp[j] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[i].split(" ")[j].toInt()
-                        if(tmp[j] >= 400){
+                        //5 - клетка выхода
+                        //7 - +монстр
+                        //9 - +игрок                            <--------------------------------- в будущем
+                        /*if(tmp[j] in 500..599){
+                            ExitPosition[0] =
+                            ExitPosition[1]
+                        }*/                                  // <--------------------------------- в будущем
+                        if(tmp[j] in 700..799){
+                            EnemyPosition[0] = i-2
+                            EnemyPosition[1] = j
+                        }
+                        if(tmp[j] in 400..499){
                             PlayerPosition[0] = i-2
                             PlayerPosition[1] = j
                         }
