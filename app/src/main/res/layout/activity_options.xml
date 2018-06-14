@@ -45,7 +45,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/settings_warning"
-        android:fontFamily="@font/artifika"/>
+       />
 
     <CheckBox
         android:clickable="false"
