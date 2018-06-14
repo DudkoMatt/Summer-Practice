@@ -136,6 +136,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true">
 
+
+
         <ImageView
             android:id="@+id/coin_img"
             android:textColor="@color/white"

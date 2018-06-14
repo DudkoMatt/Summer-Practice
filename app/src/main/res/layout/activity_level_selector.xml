@@ -11,12 +11,115 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/select_level"
-        android:textSize="40sp"
-        android:fontFamily="@font/aclonica"
-        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textColor="@color/orange"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="150dp"/>
+
+    <TableLayout
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TableRow>
+            <Button
+                android:id="@+id/lvl1"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/lvl4"
+                android:background="#00BFFF"
+                android:text="1"
+                android:textSize="35dp"/>
+
+            <Button
+                android:id="@+id/lvl2"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignTop="@+id/lvl1"
+                android:layout_centerHorizontal="true"
+                android:background="#58FAD0"
+                android:text="2"
+                android:textSize="35dp"/>
+            <Button
+                android:id="@+id/lvl3"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/lvl1"
+                android:background="#088A68"
+                android:text="3"
+                android:textSize="35dp"/>
+        </TableRow>
+        <TableRow>
+
+            <Button
+                android:id="@+id/lvl4"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="#FE2EF7"
+                android:text="4"
+                android:textSize="35dp"/>
+
+
+
+            <Button
+                android:id="@+id/lvl5"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_centerInParent="true"
+                android:background="#DF0174"
+                android:text="5"
+                android:textSize="35dp"/>
+
+
+
+            <Button
+                android:id="@+id/lvl6"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignStart="@+id/lvl3"
+                android:layout_centerVertical="true"
+                android:background="#4000FF"
+                android:text="6"
+                android:textSize="35dp"/>
+        </TableRow>
+        <TableRow>
+            <Button
+                android:id="@+id/lvl7"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/lvl4"
+                android:background="#D7DF01"
+                android:text="7"
+                android:textSize="35dp"/>
+
+            <Button
+                android:id="@+id/lvl8"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignTop="@+id/lvl7"
+                android:layout_centerHorizontal="true"
+                android:background="#5FB404"
+                android:text="8"
+                android:textSize="35dp"/>
+
+            <Button
+                android:id="@+id/lvl9"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignStart="@+id/lvl3"
+                android:layout_alignTop="@+id/lvl7"
+                android:background="#0A1B2A"
+                android:text="9"
+                android:textSize="35dp"
+                android:textColor="#FFFFFF"/>
+        </TableRow>
+    </TableLayout>
 
     <Button
         android:id="@+id/button_back"
@@ -24,30 +127,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:fontFamily="@font/atomic_age"
-        android:text="@string/back"
-        android:textSize="30sp"/>
+        android:text="@string/back" />
 
 
-    <Button
-        android:fontFamily="@font/aclonica"
-        android:layout_below="@id/select_level"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
-        android:id="@+id/button_1"
-        android:layout_width="150sp"
-        android:layout_height="wrap_content"
-        android:text="1"
-        android:textSize="20sp" />
 
-    <Button
-        android:fontFamily="@font/aclonica"
-        android:id="@+id/button_2"
-        android:layout_width="150sp"
-        android:layout_alignRight="@id/button_1"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/button_1"
-        android:layout_alignStart="@id/button_1"
-        android:text="2"
-        android:textSize="20sp"/>
+
+
+
 </RelativeLayout>
