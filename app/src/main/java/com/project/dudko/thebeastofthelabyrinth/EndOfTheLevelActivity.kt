@@ -13,7 +13,8 @@ class EndOfTheLevelActivity : AppCompatActivity() {
 
 
         Won.text = Won.text.toString().replace("level!", "level ${intent.getStringExtra("Level")}!")
-        results.text = "Your results:\nCoins: ${intent.getStringExtra("Coins")}; Time: ${intent.getStringExtra("Time")}; Turns: ${intent.getStringExtra("Turns")}"
+        //results.text = "Your results:\nCoins: ${intent.getStringExtra("Coins")}; Time: ${intent.getStringExtra("Time")}; Turns: ${intent.getStringExtra("Turns")}"
+        results.text = "Your results:\nCoins: ${intent.getStringExtra("Coins")}; Turns: ${intent.getStringExtra("Turns")}"
         results.textAlignment = View.TEXT_ALIGNMENT_CENTER
         /*button_start.setOnClickListener{
             setResult(1)

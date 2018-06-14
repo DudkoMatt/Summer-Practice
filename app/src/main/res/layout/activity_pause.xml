@@ -3,16 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PauseActivity">
+    tools:context=".PauseActivity"
+    android:background="@color/gray">
+
     <TextView
+        android:textColor="@color/black"
         android:id="@+id/pause"
         android:layout_centerHorizontal="true"
         android:text="@string/pause"
+        android:fontFamily="@font/aclonica"
         android:textSize="50sp"
         android:layout_marginTop="75dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
+        android:layout_alignStart="@id/pause"
+        android:layout_alignEnd="@id/pause"
         android:id="@+id/button_continue"
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
@@ -20,6 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
+        android:layout_alignStart="@id/pause"
+        android:layout_alignEnd="@id/pause"
         android:id="@+id/button_exit"
         android:layout_below="@id/button_continue"
         android:layout_centerHorizontal="true"
