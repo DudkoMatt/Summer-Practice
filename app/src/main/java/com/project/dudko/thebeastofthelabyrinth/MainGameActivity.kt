@@ -1,25 +1,31 @@
 package com.project.dudko.thebeastofthelabyrinth
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
 import android.media.Image
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.*
-import com.project.dudko.thebeastofthelabyrinth.R.array.map_1
 import kotlinx.android.synthetic.main.activity_main_game.*
+import org.w3c.dom.Text
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
 
+    var ID = 0
+
     class MapOfLabyrinth(var id: Int? = null, var context: Activity, var buttons: Array<Array<ImageButton>>){
+
 
         //Ввод ID стен (без указания того, что есть в клетке)
         //Вывод: строка, содержащая 4 символа: LURD
@@ -69,59 +75,107 @@ class MainGameActivity : AppCompatActivity() {
             for(i in 0..7){
                 var s = ""
                 for(j in 0..7){
-                    s += "${i};${j}: ${map[i][j]}   "
+                    s += "$i;$j: ${map[i][j]}   "
                 }
-                Log.d("Map", s+"\n")
+                //Log.d("Map", s+"\n")
             }
 
         }
 
-        fun beast_goes(x: Int, y: Int){
-             map[x][y]  -= 200
-        }
 
-        fun update(x: Int = 0, y: Int = 0, first: Boolean = false){
-            Log.d("Msg", "In update")
+        fun update(x: Int = 0, y: Int = 0, first: Boolean = false, darkMode: Boolean = false){
+            //Log.d("Msg", "In update")
 
-            if(first) redraw()
+            if(first) {
+                if (!darkMode){
+                    redraw()
+                }
+                if (darkMode){
+                    // Отрисовали все поле черным
+                    redrawWithBlack()
+                    // Отрисовали игрока
+                    drawPers(PlayerPosition[0], PlayerPosition[1])
+                    fast_redraw(EnemyPosition[0], EnemyPosition[1])
+                }
+            }
 
-            Log.d("Msg", "Before if: x=$x; y=$y")
-            //ToDO: redraw для монстра
+            //Log.d("Msg", "Before if: x=$x; y=$y")
+
 
             if (((PlayerPosition[0] == x-1 && PlayerPosition[1] == y) ||
                     (PlayerPosition[0] == x && PlayerPosition[1] == y-1) ||
                     (PlayerPosition[0] == x && PlayerPosition[1] == y+1) ||
                     (PlayerPosition[0] == x+1 && PlayerPosition[1] == y)) &&
-                    isTrunAvaliable(x, y)) { //ToDo: Стены
-                Log.d("Msg", "In if")
+                    isTrunAvaliable(x, y)) {
+                //Log.d("Msg", "In if")
                 map[PlayerPosition[0]][PlayerPosition[1]] -= 400
+                // обновил, откуда ушел
                 fast_redraw(PlayerPosition[0], PlayerPosition[1])
+                val oldX = PlayerPosition[0]
+                val oldY = PlayerPosition[1]
                 PlayerPosition[0] = x
                 PlayerPosition[1] = y
-                beast_goes( EnemyPosition[0], EnemyPosition[1])
-                fast_redraw( EnemyPosition[0], EnemyPosition[1])
-                EnemyPosition[0] = WayToPlayer[0][Amounth_monster_turns + 1]
-                EnemyPosition[1] = WayToPlayer[1][Amounth_monster_turns + 1]
-                map[WayToPlayer[0][Amounth_monster_turns + 1]][WayToPlayer[1][Amounth_monster_turns + 1]] += 200
-                fast_redraw( WayToPlayer[0][Amounth_monster_turns + 1], WayToPlayer[1][Amounth_monster_turns + 1])
-                Amounth_monster_turns ++
                 if (isCoinCollected()){
                     map[x][y] += 300
                 } else {
                     map[x][y] += 400
                 }
-                fast_redraw(PlayerPosition[0], PlayerPosition[1])
+                // обновил, куда пришел
+                if (!darkMode){
+                    fast_redraw(PlayerPosition[0], PlayerPosition[1])
+                }
+                if(darkMode){
+                    redrawWithBlack(oldX, oldY, PlayerPosition[0], PlayerPosition[1])
+                }
+
+                if(EnemyPosition[0] == PlayerPosition[0] && EnemyPosition[1] == PlayerPosition[1] && !first){
+                    var intent = Intent(context, FailEndScreenActivity::class.java)
+                    context.startActivityForResult(intent, 1)
+                }
+
+                Turns++
+                context.findViewById<TextView>(R.id.turns).text = "Turns: #".replace("#", Turns.toString())
                 //redraw()
+
+                if(!first) {
+                    WayToPlayer = findPathToPlayer()
+                    map[EnemyPosition[0]][EnemyPosition[1]] -= 200
+                    fast_redraw(EnemyPosition[0], EnemyPosition[1])
+                    EnemyPosition = WayToPlayer
+                    map[EnemyPosition[0]][EnemyPosition[1]] += 200
+                    fast_redraw(EnemyPosition[0], EnemyPosition[1])
+                }
+
+
+                if(EnemyPosition[0] == PlayerPosition[0] && EnemyPosition[1] == PlayerPosition[1] && !first){
+                    var intent = Intent(context, FailEndScreenActivity::class.java)
+                    context.startActivityForResult(intent, 1)
+                }
+
+                if (darkMode){
+                    // Отрисовали все поле черным
+                    redrawWithBlack()
+                    // Отрисовали игрока
+                    drawPers(PlayerPosition[0], PlayerPosition[1])
+                    //рисуем монстра
+                    fast_redraw(EnemyPosition[0], EnemyPosition[1])
+                }
             }
-            Log.d("Msg", "After if")
 
-            //ToDO: переходить на заключительный экран, в случае true. Или добавлять кнопку exit?
+            else if (PlayerPosition[0] == x && PlayerPosition[1] == y && ExitPosition[0] == x && ExitPosition[1] == y){
+                val intent = Intent(context, EndOfTheLevelActivity::class.java)
+                intent.putExtra("Level", id.toString())
+                intent.putExtra("Coins", NumberOfCollectedCoins.toString())
+                //intent.putExtra("Time", "${(SystemClock.elapsedRealtime() - context.chronometr.base)  / 60000}:${wrap((SystemClock.elapsedRealtime() - context.chronometr.base) /1000 % 60)}")
+                intent.putExtra("Turns", this.Turns.toString())
+                context.startActivityForResult(intent, 1)
+            }
 
-            if(PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1] && NumberOfCollectedCoins == CoinNumber){
-                context.findViewById<Button>(R.id.exit).setEnabled(true)
+
+
+            //Log.d("Msg", "After if")
+            //context.findViewById<Button>(R.id.exit).isEnabled = PlayerPosition[0] == ExitPosition[0] && PlayerPosition[1] == ExitPosition[1]
         }
-        }
-
 
         /*fun redraw(){  //Для демонстрации работы "lock"
             buttons[PlayerPosition[0]][PlayerPosition[1]].setBackgroundColor(Color.GREEN)
@@ -136,7 +190,7 @@ class MainGameActivity : AppCompatActivity() {
             noChange[3] = arrayOf(min(max(PlayerPosition[0]-1, 0), 7), PlayerPosition[1])
             noChange[4] = arrayOf(PlayerPosition[0], min(max(PlayerPosition[1]-1, 0), 7))
 
-            Log.d("Msg", "\n\n\n\n\n\n  noChange:\n0x=:${noChange[0][0]}; y=:${noChange[0][1]}\n  " +
+            //Log.d("Msg", "\n\n\n\n\n\n  noChange:\n0x=:${noChange[0][0]}; y=:${noChange[0][1]}\n  " +
                     "noChange:\n" +
                     "1:x=${noChange[1][0]}; y=${noChange[1][1]}\nnoChange:\n" +
                     "2:x=${noChange[2][0]}; y=${noChange[2][1]}\nnoChange:\n" +
@@ -153,7 +207,7 @@ class MainGameActivity : AppCompatActivity() {
 
 
         fun checkXinY(x:Array<Int>, y:Array<Array<Int>>) : Boolean{
-            Log.d("Msg", "x:(${x[0]};${x[1]})\ny:(${y[0][0]};${y[0][1]})    (${y[1][0]};${y[1][1]})    (${y[2][0]};${y[2][1]})    (${y[3][0]};${y[3][1]})    (${y[4][0]};${y[4][1]})")
+            //Log.d("Msg", "x:(${x[0]};${x[1]})\ny:(${y[0][0]};${y[0][1]})    (${y[1][0]};${y[1][1]})    (${y[2][0]};${y[2][1]})    (${y[3][0]};${y[3][1]})    (${y[4][0]};${y[4][1]})")
             for(i in 0 until y.size){
                 if(x[0] == y[i][0] && x[1] == y[i][1])
                     return true
@@ -175,20 +229,119 @@ class MainGameActivity : AppCompatActivity() {
                     context.findViewById<ImageButton>(i*10+j).setBackgroundResource(a)
                 }
             }
-
         }
 
         fun fast_redraw(x: Int, y: Int){
-            val a = context.resources.getIdentifier("img_${fill_with_zeros(map[x][y])}", "drawable", context.packageName)
-            context.findViewById<ImageButton>(x*10+y).setBackgroundResource(a) //Клетка героя
+            if (x in 0..7 && y in 0..7) {
+                val a = context.resources.getIdentifier("img_${fill_with_zeros(map[x][y])}", "drawable", context.packageName)
+                context.findViewById<ImageButton>(x * 10 + y).setBackgroundResource(a)
+            }
+        }
 
+        // все отрисовываем черным
+        fun redrawWithBlack(){
+            for(i in 0..7){
+                for(j in 0..7){
+                    val black = ContextCompat.getColor(context, R.color.black)
+                    context.findViewById<ImageButton>(i*10+j).setBackgroundColor(black)
+                }
+            }
+        }
 
-         }
+        // дали позицию, рисуем норм фон в радиусе
+        fun drawPers(x:Int, y:Int){
+            for(i in 0..1){
+                for (j in 0..1){
+                    // чтобы 4 раза одна клетка не обновлялась
+                    if (i == 0 && j == 0){
+                        fast_redraw(x, y)
+                    }
+                    else{
+                        if ((x - i) >= 0 && (y-j) >= 0)
+                            fast_redraw(x-i, y-j)
 
-        fun isCoinCollected(): Boolean{  //ToDO: вставить в update
+                        if ((x - i) >= 0 && (y+j) <= 7)
+                            fast_redraw(x-i, y+j)
+
+                        if ((x + i) <= 7 && (y+j) <= 7)
+                            fast_redraw(x+i, y+j)
+
+                        if ((x + i) <= 7 && (y-j) >= 0)
+                            fast_redraw(x+i, y-j)
+                    }
+                }
+            }
+        }
+
+        fun redrawWithBlack(oldX:Int, oldY:Int, newX:Int, newY:Int){
+            fast_redraw(newX, newY)
+            // x вертикаль; y горизонталь
+            // сходили по вертикали
+            if (oldY == newY){
+                // Ходили вверх
+                if (newX < oldX){
+                    // черним всю линию на oldX + 1
+                    fastRedrawWithBlack(oldX+1, newY-1)
+                    fastRedrawWithBlack(oldX+1, newY)
+                    fastRedrawWithBlack(oldX+1, newY+1)
+
+                    // прорисовывем линию на newX - 1
+                    fast_redraw(newX-1, newY-1)
+                    fast_redraw(newX-1, newY)
+                    fast_redraw(newX-1, newY+1)
+                }
+                // ходили вниз
+                else{
+                    // черним всю линию на oldX - 1
+                    fastRedrawWithBlack(oldX-1, newY-1)
+                    fastRedrawWithBlack(oldX-1, newY)
+                    fastRedrawWithBlack(oldX-1, newY+1)
+                    // прорисовывем линию на newX + 1
+                    fast_redraw(newX+1, newY-1)
+                    fast_redraw(newX+1, newY)
+                    fast_redraw(newX+1, newY+1)
+                }
+            }
+            // сходили по горизонтали
+            if(oldX == newX){
+                // ходили вправо
+                if (newY > oldY){
+                    // черним всю линию по oldY-1
+                    fastRedrawWithBlack(oldX-1, oldY-1)
+                    fastRedrawWithBlack(oldX, oldY-1)
+                    fastRedrawWithBlack(oldX+1, oldY-1)
+                    // прорисовывем всю линию по newY + 1
+                    fast_redraw(newX-1, newY+1)
+                    fast_redraw(newX, newY+1)
+                    fast_redraw(newX+1, newY+1)
+                }
+                // ходили влево
+                else{
+                    // черним всю линию по oldY + 1
+                    fastRedrawWithBlack(oldX-1, oldY+1)
+                    fastRedrawWithBlack(oldX, oldY+1)
+                    fastRedrawWithBlack(oldX+1, oldY+1)
+                    // отрисовываем линию по newY-1
+                    fast_redraw(newX-1, newY-1)
+                    fast_redraw(newX, newY-1)
+                    fast_redraw(newX+1, newY-1)
+                }
+            }
+        }
+
+        // одну кнопку отрисовываем черным
+        fun fastRedrawWithBlack(x: Int, y: Int){
+            if (x in 0..7 && y in 0..7){
+                val black = ContextCompat.getColor(context, R.color.black)
+                context.findViewById<ImageButton>(x*10+y).setBackgroundColor(black)
+            }
+        }
+
+        fun isCoinCollected(): Boolean{
             if(check_in_coins_position() && !check_in_collected_coins()){
                 CollectedCoins.add(PlayerPosition.toList())
                 NumberOfCollectedCoins++
+                context.findViewById<TextView>(R.id.number_of_collected_coins).text = "#collected / #whole_number".replace("#collected", NumberOfCollectedCoins.toString()).replace("#whole_number", CoinNumber.toString())
                 return true
             }
             return false
@@ -212,10 +365,49 @@ class MainGameActivity : AppCompatActivity() {
             return false
         }
 
+        fun findPathToPlayer(): Array<Int> {
+            var a = adj(EnemyPosition)
+            var b = MutableList(0){Array(2){0}}
+            for(i in a){
+                if(i[0] in 0..7 && i[1] in 0..7){
+                    b.add(i)
+                }
+            }
+            return b[Math.abs(Random().nextInt()) % b.size]
+        }
+
+        fun adj(v: Array<Int>): MutableList<Array<Int>>{
+            var to_return = MutableList(0){Array(2){0}}
+            if("L" in avaliable_turns[map[v[0]][v[1]] % 100]!!){
+                if(v[1]-1 >= 0)
+                    to_return.add(arrayOf(v[0], v[1]-1))
+            }
+            if("U" in avaliable_turns[map[v[0]][v[1]] % 100]!!){
+                if(v[0]-1 >= 0)
+                    to_return.add(arrayOf(v[0]-1, v[1]))
+            }
+            if("R" in avaliable_turns[map[v[0]][v[1]] % 100]!!){
+                if(v[1]+1 <= 7)
+                    to_return.add(arrayOf(v[0], v[1]+1))
+            }
+            if("D" in avaliable_turns[map[v[0]][v[1]] % 100]!!){
+                if(v[0]+1 <= 7)
+                    to_return.add(arrayOf(v[0]+1, v[1]))
+            }
+            return to_return
+        }
+
+        fun wrap(x: Long): String = when(x){
+            in 0..9 -> "0$x"
+            else -> "$x"
+        }
+
         var EnemyPosition = Array(2){i -> 0}
         var PlayerPosition = Array(2){i -> 0}
-        var WayToPlayer = Array(2, { Array(64, {0})})
-        var Amounth_monster_turns = 1 //Монстр ходит на поле amounth_monster_turns+1 по счету, сначала он на первой клетке
+
+        var WayToPlayer =  Array(2, {0})
+
+
         var CoinNumber = 0
         var CoinsPosition = MutableList(CoinNumber){i -> List(2){i -> 0}}
 
@@ -224,14 +416,15 @@ class MainGameActivity : AppCompatActivity() {
 
         var ExitPosition = Array(2){i -> 0} //Учитывать, что выход не сдвинут вне карты на одну клетку
 
-        //ToDo: создать ID выхода -> 900
-
         var map = MutableList(0){i -> MutableList(2){0} }
+
+        var Turns = 0
+
         init{
-
-
             if(id != null) {
-                //Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
+                ////Log.d("Map", context.resources.getStringArray(R.array.map_1)[0])
+
+                context.findViewById<TextView>(R.id.level_text).text = "Level: ${id}"
 
                 val num_x = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[0].split(" ")[0].toInt()
                 val num_y =context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[0].split(" ")[1].toInt()
@@ -239,13 +432,23 @@ class MainGameActivity : AppCompatActivity() {
                 ExitPosition[1] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[1].split(" ")[1].toInt()
 
 
-
                 CoinNumber = 0
                 for(i in 2 until num_x+2){
                     var tmp = MutableList(num_y){0}
                     for(j in 0 until num_y){
                         tmp[j] = context.resources.getStringArray(context.resources.getIdentifier("map_${id}", "array", context.packageName))[i].split(" ")[j].toInt()
-                        if(tmp[j] >= 400){
+                        //5 - клетка выхода
+                        //7 - +монстр
+                        //9 - +игрок                            <--------------------------------- в будущем
+                        /*if(tmp[j] in 500..599){
+                            ExitPosition[0] =
+                            ExitPosition[1]
+                        }*/                                  // <--------------------------------- в будущем
+                        if(tmp[j] in 700..799){
+                            EnemyPosition[0] = i-2
+                            EnemyPosition[1] = j
+                        }
+                        if(tmp[j] in 400..499){
                             PlayerPosition[0] = i-2
                             PlayerPosition[1] = j
                         }
@@ -266,6 +469,7 @@ class MainGameActivity : AppCompatActivity() {
                     }
                     map.add(tmp)
                 }
+                context.findViewById<TextView>(R.id.number_of_collected_coins).text = "#collected / #whole_number".replace("#collected", NumberOfCollectedCoins.toString()).replace("#whole_number", CoinNumber.toString())
 
 
             } else {
@@ -280,10 +484,11 @@ class MainGameActivity : AppCompatActivity() {
                 for(i in 1..6) map[i][7] = 2
             }
 
-            WayToPlayer[0] = arrayOf(7, 7, 7, 7, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0, 1, 1, 2, 3, 4, 5, 6, 7, 7, 7)
-            WayToPlayer[1] = arrayOf(3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7, 6, 5, 5, 6, 6, 6, 6, 6, 6, 6, 5, 4)
+            WayToPlayer = findPathToPlayer()
         }
     }
+
+    //var elapsedTime = 0L
 
     val REQUEST_EXIT = 1
     //0 - продолжить
@@ -291,7 +496,6 @@ class MainGameActivity : AppCompatActivity() {
 
 
     val Buttons = Array(8){i -> Array(8){i -> -1}}
-
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -304,16 +508,10 @@ class MainGameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_game)
 
 
-        exit.setEnabled(false);
+        //chronometr.base = SystemClock.elapsedRealtime()
+        //chronometr.start()
 
-
-        exit.setOnClickListener{
-            val intent = Intent(this, SuccessEndScreenActivity::class.java)
-            startActivity(intent)}
-
-        Log.d("Debug", resources.getIdentifier("img_000.jpg", "type/image", packageName).toString())
-
-        Log.d("Tag", "Create")
+        //Log.d("Tag", "Create")
 
 
         /*val tr = TableRow(this)
@@ -335,7 +533,7 @@ class MainGameActivity : AppCompatActivity() {
         for (i in 0..7) {
             for (j in 0..7)
             {
-                //Log.d("Cre", "base_width: ${baselayout.width}\nbase_heigth: ${baselayout.height}")
+                ////Log.d("Cre", "base_width: ${baselayout.width}\nbase_heigth: ${baselayout.height}")
                 val button = ImageButton(this)
                 button.layoutParams = TableRow.LayoutParams(size.y / num_y, (size.x / num_x).toInt(), 1f)//baselayout.width/8, (baselayout.height*0.7/8).toInt(), 1f)
                 button.setBackgroundResource(R.drawable.img_000)
@@ -372,7 +570,7 @@ class MainGameActivity : AppCompatActivity() {
 
         /*for(i in 0 until n) {
             val button = findViewById<ImageButton>(Buttons[i / 8][i % 8])
-            Log.d("Err", "\nid: ${Buttons[i / 8][i % 8]}\nbutton: $button")
+            //Log.d("Err", "\nid: ${Buttons[i / 8][i % 8]}\nbutton: $button")
             when (i / 8) {
                 0 -> tablerow1.addView(button)
                 1 -> tablerow2.addView(button)
@@ -397,25 +595,56 @@ class MainGameActivity : AppCompatActivity() {
 
 
         val map: MapOfLabyrinth = if(intent.hasExtra("Id_Of_Level")) {
-            Log.d("Map", "It has extra")
+            //Log.d("Map", "It has extra")
+            ID = intent.getStringExtra("Id_Of_Level").toInt()
             MapOfLabyrinth(intent.getStringExtra("Id_Of_Level").toInt(), this, ButtonsView)
         }
         else {
             MapOfLabyrinth(null, this, ButtonsView)
         }
-        map.update(map.PlayerPosition[0], map.PlayerPosition[1], first = true)
 
+        val sPref = getSharedPreferences("System", Context.MODE_PRIVATE)
+        val darkMode = sPref.getBoolean("darkMode", false)
+
+        map.update(map.PlayerPosition[0], map.PlayerPosition[1], first = true, darkMode = darkMode)
         map.debug()
 
         for(i in 0..7)
             for(j in 0..7)
                 findViewById<ImageButton>(Buttons[i][j]).setOnClickListener {
                     map.debug()
-                    map.update(i, j)
-                    //Log.d("Msg", "Clicked on a button: i=$i; j=$j;                        Player's Position: x=${map.PlayerPosition[0]}; y=${map.PlayerPosition[1]}")
+                    map.update(i, j, darkMode = darkMode)
+                    ////Log.d("Msg", "Clicked on a button: i=$i; j=$j;                        Player's Position: x=${map.PlayerPosition[0]}; y=${map.PlayerPosition[1]}")
                 }
 
+        /*exit.isEnabled = false
 
+        exit.setOnClickListener{
+            val intent = Intent(this, EndOfTheLevelActivity::class.java)
+            intent.putExtra("Level", ID.toString())
+            intent.putExtra("Coins", map.NumberOfCollectedCoins.toString())
+            intent.putExtra("Time", "${(SystemClock.elapsedRealtime() - chronometr.base)  / 60000}:${wrap((SystemClock.elapsedRealtime() - chronometr.base) /1000 % 60)}")
+            intent.putExtra("Turns", map.Turns.toString())
+            startActivityForResult(intent, 1)
+        }*/
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        //chronometr.stop()
+        //elapsedTime = SystemClock.elapsedRealtime() - chronometr.base
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //chronometr.base = SystemClock.elapsedRealtime() - elapsedTime
+        //chronometr.start()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, PauseActivity::class.java)
+        startActivityForResult(intent, REQUEST_EXIT)
     }
 
 }

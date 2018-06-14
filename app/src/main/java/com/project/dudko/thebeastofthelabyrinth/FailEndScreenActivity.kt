@@ -9,9 +9,8 @@ class FailEndScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fail_end_screen)
+        setResult(1)
         exit_fail.setOnClickListener{
-            setResult(1)
-            //1 - выйти на главное меню
             finish()
         }
     }

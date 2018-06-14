@@ -24,6 +24,7 @@
             android:textColor="#010005"
             android:textSize="50sp"
             android:textAlignment="center"
+
             android:text="@string/app_name" />
 
     </RelativeLayout>

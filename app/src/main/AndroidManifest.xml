@@ -38,12 +38,15 @@
         <activity
             android:name=".Help"
             android:screenOrientation="portrait" />
-        <activity android:name=".Options"
+        <activity
+            android:name=".Options"
             android:screenOrientation="portrait" />
-        <activity android:name=".FailEndScreenActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SuccessEndScreenActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".FailEndScreenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EndOfTheLevelActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

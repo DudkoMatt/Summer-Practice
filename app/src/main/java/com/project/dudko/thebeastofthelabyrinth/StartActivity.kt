@@ -1,5 +1,6 @@
 package com.project.dudko.thebeastofthelabyrinth
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,13 @@ class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
+
+
+        val sPref = getSharedPreferences("System", Context.MODE_PRIVATE)
+        val editor = sPref.edit()
+        editor.putBoolean("darkMode", true)
+        editor.apply()
+
 
         about.setOnClickListener{
             val intent = Intent(this, About::class.java)
