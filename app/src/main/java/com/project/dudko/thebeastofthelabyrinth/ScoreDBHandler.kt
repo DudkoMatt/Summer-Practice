@@ -22,6 +22,43 @@ class ScoreDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Cu
         onCreate(db)
     }
 
+    fun addScore(score: Score){
+        val values = ContentValues()
+        values.put(COLUMN_LEVEL, score.level)
+        values.put(COLUMN_COINS, score.coins)
+        values.put(COLUMN_TURNS, score.turns)
+
+        val db = this.writableDatabase
+
+        db.insert(TABLE_MAPS, null, values)
+        db.close()
+    }
+
+    fun findLevel(levelname: String): Score? {
+        val query =
+                "SELECT * FROM $TABLE_MAPS WHERE $COLUMN_LEVEL =  \"$levelname\""
+
+        val db = this.writableDatabase
+
+        val cursor = db.rawQuery(query, null)
+
+        var score: Score? = null
+
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst()
+
+            val id = Integer.parseInt(cursor.getString(0))
+            val level = cursor.getString(1)
+            val coins = Integer.parseInt(cursor.getString(2))
+            val turns = Integer.parseInt(cursor.getString(3))
+            score = Score(id, level, coins, turns)
+            cursor.close()
+        }
+
+        db.close()
+        return score
+    }
+
     companion object {
         private val DATABASE_VERSION = 1
         private val DATABASE_NAME = "maps.db"

@@ -15,6 +15,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.*
+import com.project.dudko.thebeastofthelabyrinth.ScoreDBHandler.*
 import kotlinx.android.synthetic.main.activity_main_game.*
 import org.w3c.dom.Text
 import java.util.*
@@ -23,17 +24,6 @@ import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
 
-    fun addScore(score: Score){
-        val values = ContentValues()
-        values.put(COLUMN_LEVEL, score.level)
-        values.put(COLUMN_QUANTITY, score.coins)
-        values.put(COLUMN_QUANTITY, score.turns)
-
-        val db = this.writableDatabase
-
-        db.insert(TABLE_PRODUCTS, null, values)
-        db.close()
-    }
 
     var ID = 0
 
