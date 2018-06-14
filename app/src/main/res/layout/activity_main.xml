@@ -27,5 +27,10 @@
         android:layout_below="@+id/list2"
         android:textSize="30sp"
         android:layout_marginTop="50sp"
+<<<<<<< Updated upstream
         android:text="@string/version" />
+=======
+        android:text="@string/version"
+        android:fontFamily="@font/atomic_age"/>
+>>>>>>> Stashed changes
 </RelativeLayout>

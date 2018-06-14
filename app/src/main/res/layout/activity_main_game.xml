@@ -5,7 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainGameActivity"
+<<<<<<< Updated upstream
     android:background="@color/black"
+=======
+    android:background="#33d0e5"
+>>>>>>> Stashed changes
     android:id="@+id/baselayout">
 
     <TextView
@@ -45,9 +49,19 @@
         android:layout_alignParentEnd="true"
         android:text="@string/pause"
         android:layout_width="wrap_content"
+<<<<<<< Updated upstream
         android:layout_height="wrap_content" />
 
     <Button
+=======
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/atomic_age"
+        android:textSize="20sp"/> />
+
+   />
+
+    <!--<Button
+>>>>>>> Stashed changes
 
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
