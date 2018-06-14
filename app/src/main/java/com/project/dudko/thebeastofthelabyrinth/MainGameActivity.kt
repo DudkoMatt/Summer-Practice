@@ -1,6 +1,7 @@
 package com.project.dudko.thebeastofthelabyrinth
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -21,6 +22,18 @@ import kotlin.math.max
 import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
+
+    fun addScore(score: Score){
+        val values = ContentValues()
+        values.put(COLUMN_LEVEL, score.level)
+        values.put(COLUMN_QUANTITY, score.coins)
+        values.put(COLUMN_QUANTITY, score.turns)
+
+        val db = this.writableDatabase
+
+        db.insert(TABLE_PRODUCTS, null, values)
+        db.close()
+    }
 
     var ID = 0
 
