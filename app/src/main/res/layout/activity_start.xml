@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:background="#33d0e5">
 
         <TextView
@@ -32,7 +32,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="5"
+        android:layout_weight="1"
         android:background="#cb56f90b">
 
         <Button
@@ -78,14 +78,15 @@
             android:text="@string/help"
             android:textSize="28sp" />
 
-        <!--<Button
+        <Button
+            android:id="@+id/scores"
             android:layout_width="140dp"
             android:layout_height="70dp"
             android:layout_below="@+id/help"
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/atomic_age"
             android:text="@string/scores"
-            android:textSize="28sp" />-->
+            android:textSize="28sp" />
 
     </RelativeLayout>
 </LinearLayout>

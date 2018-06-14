@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.content.Context
 import android.content.ContentValues
+import android.database.Cursor
 
 class ScoreDBHandler(context: Context, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) : SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
@@ -22,6 +23,11 @@ class ScoreDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Cu
         onCreate(db)
     }
 
+    fun getAllDataForCurrentLevel(level: String): Cursor{
+        val db = this.readableDatabase
+        return db.rawQuery("SELECT * FROM $TABLE_MAPS WHERE $COLUMN_LEVEL = $level", null)
+    }
+
     fun addScore(score: Score){
         val values = ContentValues()
         values.put(COLUMN_LEVEL, score.level)
@@ -34,7 +40,7 @@ class ScoreDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Cu
         db.close()
     }
 
-    fun findLevel(levelname: String): Score? {
+    fun findLevel(levelname: String): String {
         val query =
                 "SELECT * FROM $TABLE_MAPS WHERE $COLUMN_LEVEL =  \"$levelname\""
 
@@ -42,26 +48,29 @@ class ScoreDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Cu
 
         val cursor = db.rawQuery(query, null)
 
-        var score: Score? = null
+        var result = ""
 
-        if (cursor.moveToFirst()) {
-            cursor.moveToFirst()
 
-            val id = Integer.parseInt(cursor.getString(0))
-            val level = cursor.getString(1)
-            val coins = Integer.parseInt(cursor.getString(2))
-            val turns = Integer.parseInt(cursor.getString(3))
-            score = Score(id, level, coins, turns)
-            cursor.close()
+        if (cursor != null && cursor.count > 0) {
+            while (cursor.moveToNext()) {
+                var buffer = Array(2){""}
+                //val id = Integer.parseInt(cursor.getString(0))
+                //buffer[0] = cursor.getString(1)  //level
+                buffer[0]= cursor.getString(2)   //coins
+                buffer[1]= cursor.getString(3)   //turns
+                result += "Coins: ${buffer[0]}; Turns: ${buffer[1]}\n"
+            }
+
         }
 
+        cursor.close()
         db.close()
-        return score
+        return result
     }
 
     fun deleteScores(){
         val db = this.writableDatabase
-        db.execSQL("DELETE * FROM $TABLE_MAPS")
+        db.execSQL("DELETE FROM $TABLE_MAPS")
         db.close()
     }
     companion object {
