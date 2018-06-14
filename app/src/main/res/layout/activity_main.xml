@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/back" />
+        android:text="@string/back"
+        android:fontFamily="@font/atomic_age"
+        android:textSize="30sp"/>
 
     <ListView
         android:textSize="40sp"
