@@ -59,6 +59,11 @@ class ScoreDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Cu
         return score
     }
 
+    fun deleteScores(){
+        val db = this.writableDatabase
+        db.execSQL("DELETE * FROM $TABLE_MAPS")
+        db.close()
+    }
     companion object {
         private val DATABASE_VERSION = 1
         private val DATABASE_NAME = "maps.db"
