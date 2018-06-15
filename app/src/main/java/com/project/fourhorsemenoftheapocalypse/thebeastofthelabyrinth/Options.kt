@@ -1,4 +1,4 @@
-package com.project.dudko.thebeastofthelabyrinth
+package com.project.fourhorsemenoftheapocalypse.thebeastofthelabyrinth
 
 import android.content.Context
 import android.support.v7.app.AppCompatActivity

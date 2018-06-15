@@ -1,4 +1,4 @@
-package com.project.dudko.thebeastofthelabyrinth
+package com.project.fourhorsemenoftheapocalypse.thebeastofthelabyrinth
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

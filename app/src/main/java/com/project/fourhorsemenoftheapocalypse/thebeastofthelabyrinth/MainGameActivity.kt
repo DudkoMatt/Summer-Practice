@@ -1,4 +1,4 @@
-package com.project.dudko.thebeastofthelabyrinth
+package com.project.fourhorsemenoftheapocalypse.thebeastofthelabyrinth
 
 import android.app.Activity
 import android.content.ContentValues
@@ -15,7 +15,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.*
-import com.project.dudko.thebeastofthelabyrinth.ScoreDBHandler.*
+import com.project.fourhorsemenoftheapocalypse.thebeastofthelabyrinth.ScoreDBHandler.*
 import kotlinx.android.synthetic.main.activity_main_game.*
 import org.w3c.dom.Text
 import java.util.*

@@ -1,4 +1,4 @@
-package com.project.dudko.thebeastofthelabyrinth
+package com.project.fourhorsemenoftheapocalypse.thebeastofthelabyrinth
 
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper

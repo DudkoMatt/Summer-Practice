@@ -1,4 +1,4 @@
-package com.project.dudko.thebeastofthelabyrinth
+package com.project.fourhorsemenoftheapocalypse.thebeastofthelabyrinth
 
 class Score{
         var _id: Long = 0

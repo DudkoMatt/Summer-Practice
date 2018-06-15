@@ -1,11 +1,11 @@
-package com.project.dudko.thebeastofthelabyrinth
+package com.project.fourhorsemenoftheapocalypse.thebeastofthelabyrinth
 
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.project.dudko.thebeastofthelabyrinth.R.layout.activity_help
-import com.project.dudko.thebeastofthelabyrinth.R.layout.activity_main
+import com.project.fourhorsemenoftheapocalypse.thebeastofthelabyrinth.R.layout.activity_help
+import com.project.fourhorsemenoftheapocalypse.thebeastofthelabyrinth.R.layout.activity_main
 import kotlinx.android.synthetic.main.activity_start.*
 
 class StartActivity : AppCompatActivity() {
