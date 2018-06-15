@@ -41,5 +41,10 @@ class StartActivity : AppCompatActivity() {
             startActivity(intent4)
         }
 
+        scores.setOnClickListener{
+            val intent5 = Intent( this, LeaderboardActivity::class.java)
+            startActivity(intent5)
+        }
+
 }
 }

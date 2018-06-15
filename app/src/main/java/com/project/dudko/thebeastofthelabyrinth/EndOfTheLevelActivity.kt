@@ -7,6 +7,13 @@ import kotlinx.android.synthetic.main.activity_end_of_the_level.*
 
 class EndOfTheLevelActivity : AppCompatActivity() {
 
+    fun newScore(coins: Long, level: String, turns: Long) {
+        val dbHandler = ScoreDBHandler(this, null, null, 1)
+        val score = Score(level, coins, turns)
+        dbHandler.addScore(score)
+        dbHandler.close()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_end_of_the_level)
@@ -20,6 +27,9 @@ class EndOfTheLevelActivity : AppCompatActivity() {
             setResult(1)
             finish()
         }*/
+
+        newScore(intent.getStringExtra("Coins").toLong(), "Level ${intent.getStringExtra("Level")}", intent.getStringExtra("Turns").toLong())
+
         setResult(1)
         button_levels.setOnClickListener{
             finish()

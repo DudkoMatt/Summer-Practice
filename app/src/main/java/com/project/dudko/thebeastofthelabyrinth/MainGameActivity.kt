@@ -1,6 +1,7 @@
 package com.project.dudko.thebeastofthelabyrinth
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -14,6 +15,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.*
+import com.project.dudko.thebeastofthelabyrinth.ScoreDBHandler.*
 import kotlinx.android.synthetic.main.activity_main_game.*
 import org.w3c.dom.Text
 import java.util.*
@@ -21,6 +23,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 class MainGameActivity : AppCompatActivity() {
+
 
     var ID = 0
 

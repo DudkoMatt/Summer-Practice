@@ -24,4 +24,6 @@
     <string name="select_level">Select level:</string>
     <string name="warning">Tap twice on exit to flee!</string>
     <string name="settings_warning">This dangerous option was disabled due to unstable behavior when it\'s unchecked</string>
+    <string name="delete">Delete all scores</string>
+    <string name="scores">Scores</string>
 </resources>

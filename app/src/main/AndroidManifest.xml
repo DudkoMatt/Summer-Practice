@@ -47,6 +47,7 @@
         <activity
             android:name=".EndOfTheLevelActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".LeaderboardActivity"></activity>
     </application>
 
 </manifest>
