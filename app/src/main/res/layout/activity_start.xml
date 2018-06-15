@@ -33,8 +33,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="#cb56f90b">
 
         <Button
@@ -88,7 +87,8 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/atomic_age"
             android:text="@string/scores"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            android:layout_marginBottom="30dp"/>
 
     </RelativeLayout>
 </LinearLayout>
