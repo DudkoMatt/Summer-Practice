@@ -56,5 +56,6 @@ class LeaderboardActivity : AppCompatActivity() {
     fun removeScores(view: View) {
         val dbHandler = ScoreDBHandler(this, null, null, 1)
         dbHandler.deleteScores()
+        scoreboard.text = ""
     }
 }
