@@ -42,7 +42,7 @@ class ScoreDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Cu
 
     fun findLevel(levelname: String): String {
         val query =
-                "SELECT * FROM $TABLE_MAPS WHERE $COLUMN_LEVEL =  \"$levelname\""
+                "SELECT * FROM $TABLE_MAPS WHERE $COLUMN_LEVEL =  \"$levelname\" ORDER BY $COLUMN_COINS DESC, $COLUMN_TURNS ASC"
 
         val db = this.writableDatabase
 

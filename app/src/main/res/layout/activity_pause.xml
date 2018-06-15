@@ -15,7 +15,7 @@
         android:textSize="50sp"
         android:layout_marginTop="75dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
     <Button
         android:layout_alignStart="@id/pause"
         android:layout_alignEnd="@id/pause"
@@ -24,8 +24,8 @@
         android:layout_centerHorizontal="true"
         android:text="@string/continue_text"
         android:layout_width="wrap_content"
-        android:textSize="28sp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/atomic_age"/>
     <Button
         android:layout_alignStart="@id/pause"
         android:layout_alignEnd="@id/pause"
@@ -34,7 +34,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/exit"
         android:layout_width="wrap_content"
-        android:textSize="28sp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/atomic_age"/>
 
 </RelativeLayout>
