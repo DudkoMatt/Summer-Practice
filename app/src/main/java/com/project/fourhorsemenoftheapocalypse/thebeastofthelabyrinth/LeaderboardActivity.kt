@@ -3,6 +3,7 @@ package com.project.fourhorsemenoftheapocalypse.thebeastofthelabyrinth
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_leaderboard.*
@@ -13,20 +14,19 @@ class LeaderboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leaderboard)
 
-        var array = arrayOf("Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6",
-                "Level 7", "Level 8", "Level 9")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, array)
 
-        listview.adapter = adapter
-
-        listview.setOnItemClickListener {
-            _, view, _, _ ->
-                lookupLevel((view as TextView).text.toString())
+        level_number.setOnItemClickListener {
+            parent, view, position, id ->
+            var scores = lookupLevel((view as TextView).text.toString())
+            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, scores[0])
+            val adapter1 = ArrayAdapter(this, android.R.layout.simple_list_item_1, scores[1])
+            list_time.adapter = adapter
+            list_coins.adapter = adapter1
         }
 
-        button2.setOnClickListener {
-            finish()
-        }
+        //val scores = lookupLevel( level_number.onItemSelectedListener(this))
+
+
     }
 
     fun newScore(coins: Long, level: String, turns: Long) {
@@ -36,26 +36,24 @@ class LeaderboardActivity : AppCompatActivity() {
         dbHandler.close()
     }
 
-    fun lookupLevel(level: String) {
+    fun lookupLevel(level: String): MutableList<MutableList<String>> {
         val dbHandler = ScoreDBHandler(this, null, null, 1)
 
-        val scores = dbHandler.findLevel(level)
-
-        if (scores != null) {
-            scoreboard.text = scores
-        } else if (scores == ""){
-            scoreboard.text = "No Match Found"
-        } else {
-            scoreboard.text = "No Match Found"
-        }
+       return dbHandler.findLevel(level)
 
 
     }
 
-
     fun removeScores(view: View) {
         val dbHandler = ScoreDBHandler(this, null, null, 1)
         dbHandler.deleteScores()
-        scoreboard.text = ""
+
+        //Очищаем поля, где находятся все отображенные рекорды
+        //Может быть сработает. Попробуй. Если что, пиши)
+        var a = Array(0){""}
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, a)
+        val adapter1 = ArrayAdapter(this, android.R.layout.simple_list_item_1, a)
+        list_time.adapter = adapter
+        list_coins.adapter = adapter1
     }
 }

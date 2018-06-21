@@ -40,15 +40,15 @@ class ScoreDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Cu
         db.close()
     }
 
-    fun findLevel(levelname: String): String {
+    fun findLevel(levelname: String): MutableList<MutableList<String>> {
         val query =
-                "SELECT * FROM $TABLE_MAPS WHERE $COLUMN_LEVEL =  \"$levelname\" ORDER BY $COLUMN_COINS DESC, $COLUMN_TURNS ASC"
+                "SELECT * FROM $TABLE_MAPS WHERE $COLUMN_LEVEL =  \"$levelname\" ORDER BY $COLUMN_COINS DESC, $COLUMN_TURNS ASC LIMIT 5"
 
         val db = this.writableDatabase
 
         val cursor = db.rawQuery(query, null)
 
-        var result = ""
+        var result = MutableList(2){i -> MutableList(0){""}}
 
 
         if (cursor != null && cursor.count > 0) {
@@ -58,7 +58,8 @@ class ScoreDBHandler(context: Context, name: String?, factory: SQLiteDatabase.Cu
                 //buffer[0] = cursor.getString(1)  //level
                 buffer[0]= cursor.getString(2)   //coins
                 buffer[1]= cursor.getString(3)   //turns
-                result += "Coins: ${buffer[0]}; Turns: ${buffer[1]}\n"
+                result[0].add(buffer[0])
+				result[1].add(buffer[1])
             }
 
         }

@@ -26,4 +26,15 @@
     <string name="settings_warning">This dangerous option was disabled due to unstable behavior when it\'s unchecked</string>
     <string name="delete">Delete all scores</string>
     <string name="scores">Scores</string>
-</resources>
+    <string-array name="Levels">
+        <item>Level 1</item>
+        <item>Level 2</item>
+        <item>Level 3</item>
+        <item>Level 4</item>
+        <item>Level 5</item>
+        <item>Level 6</item>
+        <item>Level 7</item>
+        <item>Level 8</item>
+        <item>Level 9</item>
+    </string-array>
+    </resources>
