@@ -4,20 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.project.dudko.thebeastofthelabyrinth.Help"
+    tools:context="com.project.fourhorsemenoftheapocalypse.thebeastofthelabyrinth.Help"
     android:background="@color/gray">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-    <RelativeLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
     <Button
-        android:layout_marginVertical="15dp"
         android:textColor="@color/black"
         android:id="@+id/button2"
         android:layout_width="wrap_content"
@@ -25,44 +15,19 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/atomic_age"
-        android:layout_below="@+id/text4"
         android:textSize="30sp"
         android:text="@string/back" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="About the game:"
-            android:textSize="40sp"
-            android:fontFamily="@font/aclonica"
-            android:textColor="@color/black"
-            android:id="@+id/text5"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-
-            />
-        <TextView
-            android:layout_below="@id/text5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/artifika"
-            android:id="@+id/text6"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            android:text="@string/about_the_game"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            />
     <TextView
         android:fontFamily="@font/aclonica"
-        android:layout_marginTop="40dp"
         android:textColor="@color/black"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/text6"
+        android:layout_alignParentTop="true"
         android:text="@string/how_to_move"
         android:textSize="40sp" />
 
@@ -75,7 +40,6 @@
         android:layout_below="@id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/artifika"
         android:text="@string/how_to_move_explanation" />
 
     <TextView
@@ -100,8 +64,5 @@
         android:layout_below="@id/text3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/artifika"
         android:text="@string/how_to_win_explanation" />
-    </RelativeLayout>
-    </ScrollView>
 </RelativeLayout>

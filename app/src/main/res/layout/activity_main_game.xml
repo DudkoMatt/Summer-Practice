@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainGameActivity"
-    android:background="#33d0e5">
-    android:id="@+id/baselayout">
+    android:id="@+id/baselayout"
+    android:background="@color/black">
 
     <TextView
         android:id="@+id/level_text"
@@ -17,7 +17,7 @@
         android:textSize="25sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/artifika"/>/>
+       />
 
     <!--<TextView
         android:id="@+id/timerview"
@@ -50,7 +50,6 @@
         android:textColor="@color/white"
         android:layout_below="@id/level_text"
         android:layout_alignStart="@id/level_text"
-        android:fontFamily="@font/artifika"/>
         android:textSize="25sp"/>
     <Button
         android:id="@+id/button_pause"
@@ -60,11 +59,19 @@
         android:text="@string/pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/atomic_age"
+        android:fontFamily="@font/atomic_age"/> />
+
+    <TextView
+        android:id="@+id/warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/warning"
+        android:layout_above="@id/table"
+        android:textColor="@color/red"
+        android:layout_centerHorizontal="true"
         android:textSize="25sp"
-        /> />
-
-
+        android:layout_marginBottom="15dp"
+        />
 
     <!--<Button
 
@@ -127,6 +134,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true">
+
+
 
         <ImageView
             android:id="@+id/coin_img"
