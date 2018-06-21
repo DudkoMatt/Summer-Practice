@@ -17,7 +17,7 @@ class StartActivity : AppCompatActivity() {
 
         val sPref = getSharedPreferences("System", Context.MODE_PRIVATE)
         val editor = sPref.edit()
-        editor.putBoolean("darkMode", true)
+        editor.putBoolean("darkMode", false)
         editor.apply()
 
 
