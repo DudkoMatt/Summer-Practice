@@ -9,7 +9,7 @@
     <string name="how_to_move">How to move:</string>
     <string name="how_to_move_explanation">Just tap on the cell next to you.</string>
     <string name="how_to_win">What you need to win:</string>
-    <string name="how_to_win_explanation">You can escape any time you want. But for gaining coins you get more score! Check it out in the scoreboard.</string>
+    <string name="how_to_win_explanation">You can escape any time you want, just tap on the exit cell, when you are there. But for gaining coins you get more score! You can check it out in the scoreboard.</string>
     <string name="version">Version: 1.0</string>
     <string name="continue_text">Continue</string>
     <string name="exit">Exit</string>
@@ -26,6 +26,7 @@
     <string name="settings_warning">This dangerous option was disabled due to unstable behavior when it\'s unchecked</string>
     <string name="delete">Delete all scores</string>
     <string name="scores">Scores</string>
+    <string name="about_the_game">You need to get out of the labyrinth, and do not be caught by the beast</string>
     <string-array name="Levels">
         <item>Level 1</item>
         <item>Level 2</item>

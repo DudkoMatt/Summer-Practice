@@ -10,6 +10,7 @@
         android:id="@+id/select_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/artifika"
         android:text="@string/select_level"
         android:textSize="30sp"
         android:textColor="@color/orange"
@@ -128,7 +129,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/back" />
+        android:text="@string/back"
+        android:textSize="25sp"/>
 
 
 

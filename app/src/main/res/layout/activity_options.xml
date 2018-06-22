@@ -28,7 +28,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/back"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:fontFamily="@font/atomic_age"/>
@@ -36,6 +36,7 @@
     <TextView
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text6"
+        android:fontFamily="@font/artifika"
         android:layout_marginTop="18dp"
         android:textSize="30sp"
         android:textColor="@color/black"
